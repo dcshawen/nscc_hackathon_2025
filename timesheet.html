@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timesheet</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="timesheet-container">
+        <!-- Header Section -->
+        <div class="header">
+            <h1>Timesheet for Casual and Auxiliary* Hours</h1>
+            <p>*Collective Agreements: Faculty Article 18, Professional Support Article 18</p>
+        </div>
+
+        <!-- Employee Details Section -->
+        <div class="employee-details">
+            <label>Employee Name:</label>
+            <input type="text" placeholder="Enter employee name">
+            <label>W#:</label>
+            <input type="text" placeholder="Enter W#">
+        </div>
+
+        <!-- Details Table -->
+        <div class="details-table">
+            <div class="row">
+                <label>Fund:</label>
+                <input type="text">
+                <label>Dept:</label>
+                <input type="text">
+                <label>Program:</label>
+                <input type="text">
+                <label>Acct:</label>
+                <input type="text">
+                <label>Project:</label>
+                <input type="text">
+            </div>
+            <div class="row">
+                <label>Pay Period Start Date (Sunday):</label>
+                <input type="date">
+                <label>Pay Period End Date (Saturday):</label>
+                <input type="date">
+            </div>
+        </div>
+
+        <!-- Week 1 Table -->
+        <div class="week-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>WEEK 1</th>
+                        <th>DATE</th>
+                        <th>HOURS WORKED</th>
+                        <th>Other information, if required</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>SUNDAY</td>
+                        <td><input type="date"></td>
+                        <td><input type="number" class="hours" placeholder="Hours"></td>
+                        <td><textarea placeholder="Optional information..."></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>MONDAY</td>
+                        <td><input type="date"></td>
+                        <td><input type="number" class="hours" placeholder="Hours"></td>
+                        <td><textarea placeholder="Optional information..."></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>TUESDAY</td>
+                        <td><input type="date"></td>
+                        <td><input type="number" class="hours" placeholder="Hours"></td>
+                        <td><textarea placeholder="Optional information..."></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>WEDNESDAY</td>
+                        <td><input type="date"></td>
+                        <td><input type="number" class="hours" placeholder="Hours"></td>
+                        <td><textarea placeholder="Optional information..."></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>THURSDAY</td>
+                        <td><input type="date"></td>
+                        <td><input type="number" class="hours" placeholder="Hours"></td>
+                        <td><textarea placeholder="Optional information..."></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>FRIDAY</td>
+                        <td><input type="date"></td>
+                        <td><input type="number" class="hours" placeholder="Hours"></td>
+                        <td><textarea placeholder="Optional information..."></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>SATURDAY</td>
+                        <td><input type="date"></td>
+                        <td><input type="number" class="hours" placeholder="Hours"></td>
+                        <td><textarea placeholder="Optional information..."></textarea></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2" class="total-label">WEEK 1 TOTALS</td>
+                        <td><input type="number" id="week1-total" readonly></td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <!-- Week 2 Table -->
+        <div class="week-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>WEEK 2</th>
+                        <th>DATE</th>
+                        <th>HOURS WORKED</th>
+                        <th>Other information, if required</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>SUNDAY</td>
+                        <td><input type="date"></td>
+                        <td><input type="number" class="hours" placeholder="Hours"></td>
+                        <td><textarea placeholder="Optional information..."></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>MONDAY</td>
+                        <td><input type="date"></td>
+                        <td><input type="number" class="hours" placeholder="Hours"></td>
+                        <td><textarea placeholder="Optional information..."></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>TUESDAY</td>
+                        <td><input type="date"></td>
+                        <td><input type="number" class="hours" placeholder="Hours"></td>
+                        <td><textarea placeholder="Optional information..."></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>WEDNESDAY</td>
+                        <td><input type="date"></td>
+                        <td><input type="number" class="hours" placeholder="Hours"></td>
+                        <td><textarea placeholder="Optional information..."></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>THURSDAY</td>
+                        <td><input type="date"></td>
+                        <td><input type="number" class="hours" placeholder="Hours"></td>
+                        <td><textarea placeholder="Optional information..."></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>FRIDAY</td>
+                        <td><input type="date"></td>
+                        <td><input type="number" class="hours" placeholder="Hours"></td>
+                        <td><textarea placeholder="Optional information..."></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>SATURDAY</td>
+                        <td><input type="date"></td>
+                        <td><input type="number" class="hours" placeholder="Hours"></td>
+                        <td><textarea placeholder="Optional information..."></textarea></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2" class="total-label">WEEK 2 TOTALS</td>
+                        <td><input type="number" id="week2-total" readonly></td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <!-- Notes/Comments Section -->
+        <div class="notes-section">
+            <label>NOTES/COMMENTS:</label>
+            <textarea rows="4"></textarea>
+        </div>
+
+        <!-- Signature Section -->
+        <div class="signature-section">
+            <div class="signature-box">
+                <label>Budget Manager's Signature:</label>
+                <canvas id="manager-signature" width="300" height="100"></canvas>
+                <button onclick="clearCanvas('manager-signature')">Clear</button>
+            </div>
+            <div class="signature-box">
+                <label>Employee's Signature:</label>
+                <canvas id="employee-signature" width="300" height="100"></canvas>
+                <button onclick="clearCanvas('employee-signature')">Clear</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

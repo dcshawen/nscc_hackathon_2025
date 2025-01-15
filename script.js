@@ -55,14 +55,29 @@ function calculateTotalHours(weekNumber) {
 
 // comment this out to make auto fill work
 // Initialize total hours calculation for Week 1 and Week 2
-calculateTotalHours(1);
-calculateTotalHours(2);
+// calculateTotalHours(1);
+// calculateTotalHours(2);
+
+// if invalid input is given default to 0
+var hoursClass = document.getElementsByClassName("hours");
+for (let i = 0; i < 14; i++) {
+    hoursClass[i].addEventListener("change", function() {
+        var input = Number(hoursClass[i].value)
+        if (input == 0) {
+            this.value = 0;
+            window.alert("Daily hours must be between 0-24")
+        }
+        else if (input > 24) {
+            this.value = 0;
+            window.alert("Daily hours must be between 0-24")
+        }
+    })
+}
 
 // -------------------------------------- date managment -----------------------------------------
 // Auto fill dates if start date is entered
 document.getElementById("startDate").addEventListener("change", function() {
     const startDate = new Date(this.value)
-    console.log(startDate.getDay())
 
     if (startDate.getDay() == 6) {
         extrapolateDate("startDate", "endDate", 14);

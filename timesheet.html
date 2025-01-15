@@ -38,9 +38,9 @@
             </div>
             <div class="row">
                 <label>Pay Period Start Date (Sunday):</label>
-                <input type="date">
+                <input type="date" id="startDate">
                 <label>Pay Period End Date (Saturday):</label>
-                <input type="date">
+                <input type="date" id="endDate">
             </div>
         </div>
 
@@ -58,51 +58,51 @@
                 <tbody>
                     <tr>
                         <td>SUNDAY</td>
-                        <td><input type="date"></td>
-                        <td><input type="number" class="hours" placeholder="Hours"></td>
+                        <td><input type="date" id="day1"   ></td>
+                        <td><input type="number" min="0" class="hours" placeholder="Hours"></td>
                         <td><textarea placeholder="Optional information..."></textarea></td>
                     </tr>
                     <tr>
                         <td>MONDAY</td>
-                        <td><input type="date"></td>
-                        <td><input type="number" class="hours" placeholder="Hours"></td>
+                        <td><input type="date" id="day2"   ></td>
+                        <td><input type="number" min="0" class="hours" placeholder="Hours"></td>
                         <td><textarea placeholder="Optional information..."></textarea></td>
                     </tr>
                     <tr>
                         <td>TUESDAY</td>
-                        <td><input type="date"></td>
-                        <td><input type="number" class="hours" placeholder="Hours"></td>
+                        <td><input type="date" id="day3"   ></td>
+                        <td><input type="number" min="0" class="hours" placeholder="Hours"></td>
                         <td><textarea placeholder="Optional information..."></textarea></td>
                     </tr>
                     <tr>
                         <td>WEDNESDAY</td>
-                        <td><input type="date"></td>
-                        <td><input type="number" class="hours" placeholder="Hours"></td>
+                        <td><input type="date" id="day4"   ></td>
+                        <td><input type="number" min="0" class="hours" placeholder="Hours"></td>
                         <td><textarea placeholder="Optional information..."></textarea></td>
                     </tr>
                     <tr>
                         <td>THURSDAY</td>
-                        <td><input type="date"></td>
-                        <td><input type="number" class="hours" placeholder="Hours"></td>
+                        <td><input type="date" id="day5"    ></td>
+                        <td><input type="number" min="0" class="hours" placeholder="Hours"></td>
                         <td><textarea placeholder="Optional information..."></textarea></td>
                     </tr>
                     <tr>
                         <td>FRIDAY</td>
-                        <td><input type="date"></td>
-                        <td><input type="number" class="hours" placeholder="Hours"></td>
+                        <td><input type="date" id="day6"   ></td>
+                        <td><input type="number" min="0" class="hours" placeholder="Hours"></td>
                         <td><textarea placeholder="Optional information..."></textarea></td>
                     </tr>
                     <tr>
                         <td>SATURDAY</td>
-                        <td><input type="date"></td>
-                        <td><input type="number" class="hours" placeholder="Hours"></td>
+                        <td><input type="date" id="day7"   ></td>
+                        <td><input type="number" min="0" class="hours" placeholder="Hours"></td>
                         <td><textarea placeholder="Optional information..."></textarea></td>
                     </tr>
                 </tbody>
                 <tfoot>
                     <tr>
                         <td colspan="2" class="total-label">WEEK 1 TOTALS</td>
-                        <td><input type="number" id="week1-total" readonly></td>
+                        <td><input type="number" min="0" id="week1-total" readonly></td>
                         <td></td>
                     </tr>
                 </tfoot>
@@ -123,51 +123,51 @@
                 <tbody>
                     <tr>
                         <td>SUNDAY</td>
-                        <td><input type="date"></td>
-                        <td><input type="number" class="hours" placeholder="Hours"></td>
+                        <td><input type="date" id="day8"   ></td>
+                        <td><input type="number" min="0" class="hours" placeholder="Hours"></td>
                         <td><textarea placeholder="Optional information..."></textarea></td>
                     </tr>
                     <tr>
                         <td>MONDAY</td>
-                        <td><input type="date"></td>
-                        <td><input type="number" class="hours" placeholder="Hours"></td>
+                        <td><input type="date" id="day9"   ></td>
+                        <td><input type="number" min="0" class="hours" placeholder="Hours"></td>
                         <td><textarea placeholder="Optional information..."></textarea></td>
                     </tr>
                     <tr>
                         <td>TUESDAY</td>
-                        <td><input type="date"></td>
-                        <td><input type="number" class="hours" placeholder="Hours"></td>
+                        <td><input type="date" id="day10"   ></td>
+                        <td><input type="number" min="0" class="hours" placeholder="Hours"></td>
                         <td><textarea placeholder="Optional information..."></textarea></td>
                     </tr>
                     <tr>
                         <td>WEDNESDAY</td>
-                        <td><input type="date"></td>
-                        <td><input type="number" class="hours" placeholder="Hours"></td>
+                        <td><input type="date" id="day11"   ></td>
+                        <td><input type="number" min="0" class="hours" placeholder="Hours"></td>
                         <td><textarea placeholder="Optional information..."></textarea></td>
                     </tr>
                     <tr>
                         <td>THURSDAY</td>
-                        <td><input type="date"></td>
-                        <td><input type="number" class="hours" placeholder="Hours"></td>
+                        <td><input type="date" id="day12"   ></td>
+                        <td><input type="number" min="0" class="hours" placeholder="Hours"></td>
                         <td><textarea placeholder="Optional information..."></textarea></td>
                     </tr>
                     <tr>
                         <td>FRIDAY</td>
-                        <td><input type="date"></td>
-                        <td><input type="number" class="hours" placeholder="Hours"></td>
+                        <td><input type="date" id="day13"   ></td>
+                        <td><input type="number" min="0" class="hours" placeholder="Hours"></td>
                         <td><textarea placeholder="Optional information..."></textarea></td>
                     </tr>
                     <tr>
                         <td>SATURDAY</td>
-                        <td><input type="date"></td>
-                        <td><input type="number" class="hours" placeholder="Hours"></td>
+                        <td><input type="date" id="day14"   ></td>
+                        <td><input type="number" min="0" class="hours" placeholder="Hours"></td>
                         <td><textarea placeholder="Optional information..."></textarea></td>
                     </tr>
                 </tbody>
                 <tfoot>
                     <tr>
                         <td colspan="2" class="total-label">WEEK 2 TOTALS</td>
-                        <td><input type="number" id="week2-total" readonly></td>
+                        <td><input type="number" min="0" id="week2-total" readonly></td>
                         <td></td>
                     </tr>
                 </tfoot>

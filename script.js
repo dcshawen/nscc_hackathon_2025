@@ -53,6 +53,70 @@ function calculateTotalHours(weekNumber) {
     });
 }
 
+// comment this out to make auto fill work
 // Initialize total hours calculation for Week 1 and Week 2
 calculateTotalHours(1);
 calculateTotalHours(2);
+
+// -------------------------------------- date managment -----------------------------------------
+// Auto fill dates if start date is entered
+document.getElementById("startDate").addEventListener("change", function() {
+    const startDate = new Date(this.value)
+    console.log(startDate.getDay())
+
+    if (startDate.getDay() == 6) {
+        extrapolateDate("startDate", "endDate", 14);
+        extrapolateDate("startDate", "day1", 1);
+        for (let i = 0; i < 13; i++) {
+            var dayID = "day" + (i + 1)
+            var nextDayID = "day" + (i + 2)
+    
+            extrapolateDate(dayID, nextDayID, 2)
+        }
+    }
+    else {
+        this.value = ""
+        window.alert("Start day must be a sunday")
+    }
+})
+
+// Auto fill dates if end date is entered
+document.getElementById("endDate").addEventListener("change", function() {
+    const endDate = new Date(this.value)
+
+    if (endDate.getDay() == 5) {
+        extrapolateDate("endDate", "startDate", -12);
+        extrapolateDate("startDate", "day1", 1);
+        for (let i = 0; i < 13; i++) {
+            var dayID = "day" + (i + 1)
+            var nextDayID = "day" + (i + 2)
+    
+            extrapolateDate(dayID, nextDayID, 2)
+        }
+    }
+    else {
+        this.value = ""
+        window.alert("End date must be a saturday")
+    }
+
+})
+
+// Add an amount of days to a date and output it to an input box
+// Takes in id of original date, id of where to write the new date, how many days to add/subtract
+function extrapolateDate(origDateID, newDateID, days) {
+    const endDateBox = document.getElementById(newDateID);
+    const startDateBox = document.getElementById(origDateID);
+    
+    const startDateInput = startDateBox.value;
+    const startDate = new Date(startDateInput);
+    
+    const endDate = new Date(startDateInput);
+
+    endDate.setDate(endDate.getDate() + days);
+
+    const endDay = ("0" + endDate.getDate()).slice(-2);
+    const endMonth = ("0" + (endDate.getMonth() + 1)).slice(-2);
+    const endDateInput = endDate.getFullYear() + "-" + endMonth + "-" + endDay;
+
+    endDateBox.value = endDateInput;
+}

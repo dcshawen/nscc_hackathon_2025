@@ -44,34 +44,37 @@ def draw_wrapped_text(c, x, y, wrapped_text, font_size):
 def draw_line_through_points(c, points, x_offset, y_offset):
     if len(points) < 2:
         return  # Need at least two points to draw a line
-
-
-
+    
     c.setStrokeColor(colors.black)
     c.setLineWidth(1)
     for i in range(len(points) - 1):
-        x1, y1 = points[i]
-        x2, y2 = points[i + 1]
+        try:       
+            x1, y1 = points[i]
+            x2, y2 = points[i + 1]
 
+            y1 = 100 - y1
+            y2 = 100 - y2
+            
+            c.line(x1 + x_offset, y1 + y_offset, x2 + x_offset, y2 + y_offset)
+        except:
+            continue
 
-        #  MIRROR ON Y AXIS
-        # if y1 > 50:
-        #     y1 = y1 - 50
-        # elif y1 < 50:
-        #     y1 = y1 + 50
-        # else:
-        #     y1 = y1
+# insert data into a table, taking in the table and some data format as input
+def loadData (table):
+    for i in len(table):
+        pass
 
-        # if y2 > 50:
-        #     y2 = y1 - 50
-        # elif y2 < 50:
-        #     y2 = y1 + 50
-        # else:
-        #     y2 = y2
+# convert json signature data to work with this script
+def convertSignature (signature):
+    newSignature = []
+    for i in signature:
+        if signature.newStroke == True:
+            newSignature.push(0)
+        else:
+            newSignature.push([signature[i].x, signature[i].y])
+    return newSignature
 
-        c.line(x1 + x_offset, y1 + y_offset, x2 + x_offset, y2 + y_offset)
-
-def create_pdf_with_table(output_filename, employee_data, pay_period_data, fund_dept_data, hourly_rate_data, casual_auxiliary_data, table_data, table_data_week2, font_size=10):
+def create_pdf_with_table(output_filename, employee_data, pay_period_data, fund_dept_data, hourly_rate_data, casual_auxiliary_data, table_data, table_data_week2, spSignature, empSignature, font_size=10):
     c = canvas.Canvas(output_filename, pagesize=letter)
     width, height = letter
 
@@ -153,10 +156,7 @@ def create_pdf_with_table(output_filename, employee_data, pay_period_data, fund_
 
     c.drawString(x_manager_signature + 5, y_signature + signature_box_height - 15, "Supervisor's Signature")
     c.drawString(x_employee_signature + 5, y_signature + signature_box_height - 15, "Employee's Signature")
-
-    # Example points to draw a line through in the Supervisor's signature box
-    spSignature = [(0, 0), (50, 30), (100, 50), (150, 70), (260, 100)]
-    empSignature = [[31,44.125],[31,33.125],[36,26.125],[44,20.125],[53,17.125],[63,18.125],[68,27.125],[69,38.125],[67,48.125],[62,58.125],[56,67.125],[49,73.125],[39,79.125],[29,85.125],[21,88.125],[26,78.125],[32,69.125],[39,62.125],[46,58.125],[55,55.125],[65,54.125],[76,54.125],[87,54.125],[87,57.125],[78,61.125],[71,67.125],[64,72.125],[67,79.125],[76,77.125],[84,73.125],[92,70.125],[100,66.125],[108,58.125],[108,51.125],[101,55.125],[94,62.125],[92,72.125],[99,76.125],[108,79.125],[119,78.125],[128,75.125],[136,69.125],[141,63.125],[142,53.125],[143,47.125],[137,54.125],[130,63.125],[128,73.125],[129,83.125],[136,88.125],[147,88.125],[159,87.125],[172,83.125],[184,79.125],[194,74.125],[200,67.125]]
+    
     draw_line_through_points(c, spSignature, x_manager_signature, y_signature)
     draw_line_through_points(c, empSignature, x_employee_signature, y_signature)
 
@@ -164,15 +164,28 @@ def create_pdf_with_table(output_filename, employee_data, pay_period_data, fund_
 
     print("PDF Created")
 
-# Example usage
+
+
+# TABLE DATA
+# # Original signatures
+spSignatureOrig = []
+empSignatureOrig = []
+# conver signatures to correct format
+spSignature = convertSignature(spSignatureOrig)
+empSignature = convertSignature(empSignatureOrig)
+
+# example signatures
+#spSignature = [0,[55,66],[53,65],[51,65],[47,64],[42,62],[38,58],[36,58],[33,55],[30,50],[27,48],[26,45],[26,44],[26,43],[26,42],[28,41],[33,36],[41,28],[51,22],[57,18],[61,17],[65,16],[67,16],[69,16],[71,17],[77,20],[82,25],[85,28],[91,36],[93,42],[94,46],[94,48],[93,53],[89,60],[81,72],[77,80],[74,86],[73,88],[71,88],[69,91],[63,92],[59,93],[51,94],[47,94],[43,94],[43,94],[42,94],[41,94],[39,92],[36,86],[34,80],[33,74],[32,72],[32,72],[34,70],[43,66],[55,60],[73,51],[87,46],[103,40],[107,40],[109,40],[111,40],[113,41],[113,42],[114,43],[115,48],[115,49],[115,50],[115,51],[115,52],[114,54],[113,55],[113,56],[112,56],[112,57],[112,59],[113,61],[114,68],[117,74],[119,76],[120,78],[124,78],[129,76],[140,60],[147,51],[148,48],[148,46],[149,46],[149,46],[147,46],[147,46],[145,46],[145,46],[145,46],[149,45],[154,45],[156,45],[157,46],[159,49],[159,52],[159,56],[159,57],[159,60],[159,60],[161,61],[162,62],[191,62],[209,68],[213,71],[217,78],[219,85],[219,86],[216,86],[215,80],[217,72],[225,64],[233,62],[243,62],[245,62],-1]
+#empSignature = [0,[87,31],[87,33],[87,39],[87,45],[87,51],[87,54],[88,56],[88,58],[88,59],[88,60],[88,60],[88,61],0,[143,40],[143,42],[143,42],[143,44],[143,45],[144,46],[144,47],[145,48],[145,50],[147,52],[147,52],[149,54],[149,56],[149,57],[149,58],[149,58],0,[74,72],[75,72],[77,72],[80,73],[82,74],[84,74],[86,74],[87,74],[89,74],[90,74],[93,75],[95,75],[100,76],[101,76],[103,76],[105,76],[106,78],[107,78],[109,78],[111,78],[112,78],[113,78],[115,78],[115,78],[117,78],[118,78],[119,78],[120,78],[122,78],[123,78],[124,78],[126,78],[127,78],[129,78],[131,78],[133,78],[139,76],[142,76],[145,76],[147,75],[149,75],[149,75],[150,74],[151,74],[151,74],[152,74],[153,73],[155,72],[155,71],[157,71],[157,71],[158,71],[159,71],[160,71],-1]
+
 employee_data = [
-    ["Employee Name", "John Doe"],
-    ["w#", "w123456"]
+    ["Employee Name", ""],
+    ["w#", ""]
 ]
 
 pay_period_data = [
     ["PAY PERIOD START DATE", "PAY PERIOD END DATE"],
-    ["Sunday", "Saturday"]
+    ["", ""]
 ]
 
 fund_dept_data = [
@@ -182,24 +195,24 @@ fund_dept_data = [
 
 hourly_rate_data = [
     ["Hourly Rate"],
-    ["$20.00"]
+    [""]
 ]
 
 casual_auxiliary_data = [
     ["Casual", "Auxiliary"],
-    ["X", ""]
+    ["", ""]
 ]
 
 table_data = [
     ["WEEK 1", "DATE", "HOURS WORKED", "OTHER INFORMATION"],
-    ["Sunday", "December 29", "24", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim "],
+    ["Sunday", "", "", ""],
     ["Monday", "", "", ""],
     ["Tuesday", "", "", ""],
     ["Wednesday", "", "", ""],
     ["Thursday", "", "", ""],
     ["Friday", "", "", ""],
     ["Saturday", "", "", ""],
-    ["Total", "", "", ""],  # Add the "Total" row at the bottom
+    ["Total", "", "", ""], 
 ]
 
 table_data_week2 = [
@@ -211,7 +224,10 @@ table_data_week2 = [
     ["Thursday", "", "", ""],
     ["Friday", "", "", ""],
     ["Saturday", "", "", ""],
-    ["Total", "", "", ""],  # Add the "Total" row at the bottom
+    ["Total", "", "", ""], 
 ]
 
-create_pdf_with_table("c:/Users/Mrmic/Documents/nscc_hackathon_2025/PDFCreation/output.pdf", employee_data, pay_period_data, fund_dept_data, hourly_rate_data, casual_auxiliary_data, table_data, table_data_week2, font_size=10)
+
+#loadData(table_data)
+
+create_pdf_with_table("PDFCreation/timesheet.pdf", employee_data, pay_period_data, fund_dept_data, hourly_rate_data, casual_auxiliary_data, table_data, table_data_week2, spSignature, empSignature, font_size=10)

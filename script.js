@@ -58,22 +58,6 @@ function calculateTotalHours(weekNumber) {
 // calculateTotalHours(1);
 // calculateTotalHours(2);
 
-// if invalid input is given default to 0
-var hoursClass = document.getElementsByClassName("hours");
-for (let i = 0; i < 14; i++) {
-    hoursClass[i].addEventListener("change", function() {
-        var input = Number(hoursClass[i].value)
-        if (input == 0) {
-            this.value = 0;
-            window.alert("Daily hours must be between 0-24")
-        }
-        else if (input > 24) {
-            this.value = 0;
-            window.alert("Daily hours must be between 0-24")
-        }
-    })
-}
-
 // -------------------------------------- date managment -----------------------------------------
 // Auto fill dates if start date is entered
 document.getElementById("startDate").addEventListener("change", function() {
@@ -113,7 +97,6 @@ document.getElementById("endDate").addEventListener("change", function() {
         this.value = ""
         window.alert("End date must be a saturday")
     }
-
 })
 
 // Add an amount of days to a date and output it to an input box
@@ -134,4 +117,151 @@ function extrapolateDate(origDateID, newDateID, days) {
     const endDateInput = endDate.getFullYear() + "-" + endMonth + "-" + endDay;
 
     endDateBox.value = endDateInput;
+}
+
+// -------------------------------- Data validation --------------------------------
+document.getElementById("empNameID").addEventListener("change", function() {
+    if (this.value.length > 50) {
+        this.value = '';
+        window.alert("Employee name must be less than 40 characters")
+    }
+    else if (!/^[A-Za-z]+ [A-Za-z]+$/.test(this.value)) {
+        this.value = '';
+        window.alert("Name must be in the format 'First Last' (no extra spaces)")
+    }
+})
+
+document.getElementById("wNumberID").addEventListener("change", function() {
+    if (this.value.length != 8) {
+        this.value = '';
+        window.alert("W Number must be 8 characters long")
+    }
+    else if (!/^[Ww]\d{7}$/.test(this.value)) {
+        this.value = '';
+        window.alert("W Number must be in the format 'W########'")
+    }
+})
+
+document.getElementById("fundID").addEventListener("change", function() {
+    if (this.value.length > 40) {
+        this.value = '';
+        window.alert("Fund must be less than 40 characters")
+    }
+    else if (!/^[A-Za-z0-9 ]+$/.test(this.value)) {
+        this.value = '';
+        window.alert("Fund must be alphanumeric and can contain spaces")
+    }
+})
+
+document.getElementById("deptID").addEventListener("change", function() {
+    if (this.value.length > 40) {
+        this.value = '';
+        window.alert("Dept must be less than 40 characters")
+    }
+    else if (!/^[A-Za-z0-9 ]+$/.test(this.value)) {
+        this.value = '';
+        window.alert("Dept must be alphanumeric and can contain spaces")
+    }
+})
+
+document.getElementById("programID").addEventListener("change", function() {
+    if (this.value.length > 40) {
+        this.value = '';
+        window.alert("Program must be less than 40 characters")
+    }
+    else if (!/^[A-Za-z0-9 ]+$/.test(this.value)) {
+        this.value = '';
+        window.alert("Program must be alphanumeric and can contain spaces")
+    }
+})
+
+document.getElementById("acctID").addEventListener("change", function() {
+    if (this.value.length > 40) {
+        this.value = '';
+        window.alert("Acct must be less than 40 characters")
+    }
+    else if (!/^[A-Za-z0-9 ]+$/.test(this.value)) {
+        this.value = '';
+        window.alert("Acct must be alphanumeric and can contain spaces")
+    }
+})
+
+document.getElementById("projectID").addEventListener("change", function() {
+    if (this.value.length > 40) {
+        this.value = '';
+        window.alert("Project must be less than 40 characters")
+    }
+    else if (!/^[A-Za-z0-9 ]+$/.test(this.value)) {
+        this.value = '';
+        window.alert("Project must be alphanumeric and can contain spaces")
+    }
+})
+
+// Validate daily hours input
+var hoursClass = document.getElementsByClassName("hours");
+for (let i = 0; i < hoursClass.length; i++) {
+    hoursClass[i].addEventListener("change", function() {
+        var input = parseFloat(this.value);
+        if (isNaN(input)) {
+            this.value = 0;
+            window.alert("Daily hours must be a numeric value");
+        }
+        else if (input < 0 || input > 24) {
+            this.value = 0;
+            window.alert("Daily hours must be between 0-24");
+        }
+        else if (input % 0.5 !== 0) {
+            this.value = 0;
+            window.alert("Daily hours must be in increments of 0.5");
+        }
+    });
+    hoursClass[i].addEventListener("input", function() {
+        var input = parseFloat(this.value);
+        if (isNaN(input)) {
+            this.value = 0;
+            window.alert("Daily hours must be a numeric value");
+        }
+    });
+}
+
+// Validate notes/comments input
+document.getElementById("noteID").addEventListener("change", function() {
+    if (this.value.length > 255) {
+        window.alert("Notes/comments must be less than 255 characters");
+    }
+    else if (/;/.test(this.value)) {
+        this.value = this.value.replace(/;/g, '');
+        window.alert("Notes/comments cannot contain semicolons");
+    }
+});
+document.getElementById("noteID").addEventListener("input", function() {
+    if (this.value.length > 255) {
+        window.alert("Notes/comments must be less than 255 characters");
+    }
+    else if (/;/.test(this.value)) {
+        this.value = this.value.replace(/;/g, '');
+        window.alert("Notes/comments cannot contain semicolons");
+    }
+});
+
+var optionalInformationClass = document.getElementsByClassName("optionalInformation");
+for (let i = 0; i < optionalInformationClass.length; i++) {
+    optionalInformationClass[i].addEventListener("change", function() {
+        if (this.value.length > 255) {
+            window.alert("Notes/comments must be less than 255 characters");
+        }
+        else if (/;/.test(this.value)) {
+            this.value = this.value.replace(/;/g, '');
+            window.alert("Notes/comments cannot contain semicolons");
+        }
+    });
+    optionalInformationClass[i].addEventListener("input", function() {
+        if (this.value.length > 255) {
+            window.alert("Notes/comments must be less than 255 characters");
+        }
+        else if (/;/.test(this.value)) {
+            this.value = this.value.replace(/;/g, '');
+            window.alert("Notes/comments cannot contain semicolons");
+        }
+    });
 }

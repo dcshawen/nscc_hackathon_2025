@@ -4,6 +4,7 @@ from reportlab.lib import colors
 from reportlab.lib.units import inch
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfbase import pdfmetrics
+import pyodbc
 
 def draw_table(c, data, x, y, col_widths, row_height, font_size, other_info_font_size=7):
     num_cols = len(col_widths)
@@ -230,4 +231,43 @@ table_data_week2 = [
 
 #loadData(table_data)
 
-create_pdf_with_table("PDFCreation/timesheet.pdf", employee_data, pay_period_data, fund_dept_data, hourly_rate_data, casual_auxiliary_data, table_data, table_data_week2, spSignature, empSignature, font_size=10)
+create_pdf_with_table("PDFCreation/timesheettest.pdf", employee_data, pay_period_data, fund_dept_data, hourly_rate_data, casual_auxiliary_data, table_data, table_data_week2, spSignature, empSignature, font_size=10)
+
+# Database connection
+def get_db_connection():
+    try:
+        connection = pyodbc.connect(
+            r"DRIVER={ODBC Driver 17 for SQL Server};"
+            r"JG-07\MSSQLSERVER2022;"  # Replace with your server name
+            r"DATABASE=TSDB;"  # Replace with your database name
+            r"Trusted_Connection=yes;"
+        )
+        return connection
+    except Exception as error:
+        print(f"Database connection failed: {error}")
+        return None
+
+    
+# Fetch data from the database
+def fetch_data():
+    connection = get_db_connection()
+    if connection is None:
+        return None
+
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM EMP_DETAIL")  # Replace with your query
+            data = cursor.fetchall()
+            return data
+    except Exception as error:
+        print(f"Data fetching failed: {error}")
+        return None
+
+# Example usage
+if __name__ == "__main__":
+    data = fetch_data()
+    if data:
+        for row in data:
+            print(row)
+    else:
+        print("Failed to fetch data from the database.")

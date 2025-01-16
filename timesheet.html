@@ -17,24 +17,24 @@
         <!-- Employee Details Section -->
         <div class="employee-details">
             <label>Employee Name:</label>
-            <input type="text" placeholder="Enter employee name">
+            <input type="text" id="empNameID" placeholder="Enter employee name">
             <label>W#:</label>
-            <input type="text" placeholder="Enter W#">
+            <input type="text" id="wNumberID" placeholder="Enter W#">
         </div>
 
         <!-- Details Table -->
         <div class="details-table">
             <div class="row">
                 <label>Fund:</label>
-                <input type="text">
+                <input type="text" id="fundID" placeholder="Enter fund">
                 <label>Dept:</label>
-                <input type="text">
+                <input type="text" id="deptID" placeholder="Enter dept">
                 <label>Program:</label>
-                <input type="text">
+                <input type="text" id="programID" placeholder="Enter program">
                 <label>Acct:</label>
-                <input type="text">
+                <input type="text" id="acctID" placeholder="Enter account">
                 <label>Project:</label>
-                <input type="text">
+                <input type="text" id="projectID" placeholder="Enter project">
             </div>
             <div class="row">
                 <label>Pay Period Start Date (Sunday):</label>
@@ -60,43 +60,43 @@
                         <td>SUNDAY</td>
                         <td><input type="date" id="day1"   ></td>
                         <td><input type="number" min="0" class="hours" placeholder="Hours"></td>
-                        <td><textarea placeholder="Optional information..."></textarea></td>
+                        <td><textarea placeholder="Optional information..." class="optionalInformation"></textarea></td>
                     </tr>
                     <tr>
                         <td>MONDAY</td>
                         <td><input type="date" id="day2"   ></td>
                         <td><input type="number" min="0" class="hours" placeholder="Hours"></td>
-                        <td><textarea placeholder="Optional information..."></textarea></td>
+                        <td><textarea placeholder="Optional information..." class="optionalInformation"></textarea></td>
                     </tr>
                     <tr>
                         <td>TUESDAY</td>
                         <td><input type="date" id="day3"   ></td>
                         <td><input type="number" min="0" class="hours" placeholder="Hours"></td>
-                        <td><textarea placeholder="Optional information..."></textarea></td>
+                        <td><textarea placeholder="Optional information..." class="optionalInformation"></textarea></td>
                     </tr>
                     <tr>
                         <td>WEDNESDAY</td>
                         <td><input type="date" id="day4"   ></td>
                         <td><input type="number" min="0" class="hours" placeholder="Hours"></td>
-                        <td><textarea placeholder="Optional information..."></textarea></td>
+                        <td><textarea placeholder="Optional information..." class="optionalInformation"></textarea></td>
                     </tr>
                     <tr>
                         <td>THURSDAY</td>
                         <td><input type="date" id="day5"    ></td>
                         <td><input type="number" min="0" class="hours" placeholder="Hours"></td>
-                        <td><textarea placeholder="Optional information..."></textarea></td>
+                        <td><textarea placeholder="Optional information..." class="optionalInformation"></textarea></td>
                     </tr>
                     <tr>
                         <td>FRIDAY</td>
                         <td><input type="date" id="day6"   ></td>
                         <td><input type="number" min="0" class="hours" placeholder="Hours"></td>
-                        <td><textarea placeholder="Optional information..."></textarea></td>
+                        <td><textarea placeholder="Optional information..." class="optionalInformation"></textarea></td>
                     </tr>
                     <tr>
                         <td>SATURDAY</td>
                         <td><input type="date" id="day7"   ></td>
                         <td><input type="number" min="0" class="hours" placeholder="Hours"></td>
-                        <td><textarea placeholder="Optional information..."></textarea></td>
+                        <td><textarea placeholder="Optional information..." class="optionalInformation"></textarea></td>
                     </tr>
                 </tbody>
                 <tfoot>
@@ -125,43 +125,43 @@
                         <td>SUNDAY</td>
                         <td><input type="date" id="day8"   ></td>
                         <td><input type="number" min="0" class="hours" placeholder="Hours"></td>
-                        <td><textarea placeholder="Optional information..."></textarea></td>
+                        <td><textarea placeholder="Optional information..." class="optionalInformation"></textarea></td>
                     </tr>
                     <tr>
                         <td>MONDAY</td>
                         <td><input type="date" id="day9"   ></td>
                         <td><input type="number" min="0" class="hours" placeholder="Hours"></td>
-                        <td><textarea placeholder="Optional information..."></textarea></td>
+                        <td><textarea placeholder="Optional information..." class="optionalInformation"></textarea></td>
                     </tr>
                     <tr>
                         <td>TUESDAY</td>
                         <td><input type="date" id="day10"   ></td>
                         <td><input type="number" min="0" class="hours" placeholder="Hours"></td>
-                        <td><textarea placeholder="Optional information..."></textarea></td>
+                        <td><textarea placeholder="Optional information..." class="optionalInformation"></textarea></td>
                     </tr>
                     <tr>
                         <td>WEDNESDAY</td>
                         <td><input type="date" id="day11"   ></td>
                         <td><input type="number" min="0" class="hours" placeholder="Hours"></td>
-                        <td><textarea placeholder="Optional information..."></textarea></td>
+                        <td><textarea placeholder="Optional information..." class="optionalInformation"></textarea></td>
                     </tr>
                     <tr>
                         <td>THURSDAY</td>
                         <td><input type="date" id="day12"   ></td>
                         <td><input type="number" min="0" class="hours" placeholder="Hours"></td>
-                        <td><textarea placeholder="Optional information..."></textarea></td>
+                        <td><textarea placeholder="Optional information..." class="optionalInformation"></textarea></td>
                     </tr>
                     <tr>
                         <td>FRIDAY</td>
                         <td><input type="date" id="day13"   ></td>
                         <td><input type="number" min="0" class="hours" placeholder="Hours"></td>
-                        <td><textarea placeholder="Optional information..."></textarea></td>
+                        <td><textarea placeholder="Optional information..." class="optionalInformation"></textarea></td>
                     </tr>
                     <tr>
                         <td>SATURDAY</td>
                         <td><input type="date" id="day14"   ></td>
                         <td><input type="number" min="0" class="hours" placeholder="Hours"></td>
-                        <td><textarea placeholder="Optional information..."></textarea></td>
+                        <td><textarea placeholder="Optional information..." class="optionalInformation"></textarea></td>
                     </tr>
                 </tbody>
                 <tfoot>
@@ -177,7 +177,7 @@
         <!-- Notes/Comments Section -->
         <div class="notes-section">
             <label>NOTES/COMMENTS:</label>
-            <textarea rows="4"></textarea>
+            <textarea rows="4" id="noteID"></textarea>
         </div>
 
         <!-- Signature Section -->

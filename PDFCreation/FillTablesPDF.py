@@ -67,8 +67,8 @@ def loadData (table):
 # convert json signature data to work with this script
 def convertSignature (signature):
     newSignature = []
-    for i in len(signature):
-        if signature[i].newStroke == True:
+    for i in signature:
+        if signature.newStroke == True:
             newSignature.push(0)
         else:
             newSignature.push([signature[i].x, signature[i].y])
@@ -164,14 +164,15 @@ def create_pdf_with_table(output_filename, employee_data, pay_period_data, fund_
 
     print("PDF Created")
 
-# TABLE DATA
 
-# Original signatures
+
+# TABLE DATA
+# # Original signatures
 spSignatureOrig = []
 empSignatureOrig = []
 # conver signatures to correct format
-spSignature = convertSignature()
-empSignature = convertSignature()
+spSignature = convertSignature(spSignatureOrig)
+empSignature = convertSignature(empSignatureOrig)
 
 # example signatures
 #spSignature = [0,[55,66],[53,65],[51,65],[47,64],[42,62],[38,58],[36,58],[33,55],[30,50],[27,48],[26,45],[26,44],[26,43],[26,42],[28,41],[33,36],[41,28],[51,22],[57,18],[61,17],[65,16],[67,16],[69,16],[71,17],[77,20],[82,25],[85,28],[91,36],[93,42],[94,46],[94,48],[93,53],[89,60],[81,72],[77,80],[74,86],[73,88],[71,88],[69,91],[63,92],[59,93],[51,94],[47,94],[43,94],[43,94],[42,94],[41,94],[39,92],[36,86],[34,80],[33,74],[32,72],[32,72],[34,70],[43,66],[55,60],[73,51],[87,46],[103,40],[107,40],[109,40],[111,40],[113,41],[113,42],[114,43],[115,48],[115,49],[115,50],[115,51],[115,52],[114,54],[113,55],[113,56],[112,56],[112,57],[112,59],[113,61],[114,68],[117,74],[119,76],[120,78],[124,78],[129,76],[140,60],[147,51],[148,48],[148,46],[149,46],[149,46],[147,46],[147,46],[145,46],[145,46],[145,46],[149,45],[154,45],[156,45],[157,46],[159,49],[159,52],[159,56],[159,57],[159,60],[159,60],[161,61],[162,62],[191,62],[209,68],[213,71],[217,78],[219,85],[219,86],[216,86],[215,80],[217,72],[225,64],[233,62],[243,62],[245,62],-1]

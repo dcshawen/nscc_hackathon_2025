@@ -120,6 +120,7 @@ function extrapolateDate(origDateID, newDateID, days) {
 }
 
 // -------------------------------- Data validation --------------------------------
+// Validate employee name input
 document.getElementById("empNameID").addEventListener("change", function() {
     if (this.value.length > 50) {
         this.value = '';
@@ -131,6 +132,7 @@ document.getElementById("empNameID").addEventListener("change", function() {
     }
 })
 
+// Validate W number input
 document.getElementById("wNumberID").addEventListener("change", function() {
     if (this.value.length != 8) {
         this.value = '';
@@ -142,6 +144,7 @@ document.getElementById("wNumberID").addEventListener("change", function() {
     }
 })
 
+// Validate fund input
 document.getElementById("fundID").addEventListener("change", function() {
     if (this.value.length > 40) {
         this.value = '';
@@ -153,6 +156,7 @@ document.getElementById("fundID").addEventListener("change", function() {
     }
 })
 
+// Validate department input
 document.getElementById("deptID").addEventListener("change", function() {
     if (this.value.length > 40) {
         this.value = '';
@@ -164,6 +168,7 @@ document.getElementById("deptID").addEventListener("change", function() {
     }
 })
 
+// Validate program input
 document.getElementById("programID").addEventListener("change", function() {
     if (this.value.length > 40) {
         this.value = '';
@@ -175,6 +180,7 @@ document.getElementById("programID").addEventListener("change", function() {
     }
 })
 
+// Validate account input
 document.getElementById("acctID").addEventListener("change", function() {
     if (this.value.length > 40) {
         this.value = '';
@@ -186,6 +192,7 @@ document.getElementById("acctID").addEventListener("change", function() {
     }
 })
 
+// Validate project input
 document.getElementById("projectID").addEventListener("change", function() {
     if (this.value.length > 40) {
         this.value = '';
@@ -244,6 +251,7 @@ document.getElementById("noteID").addEventListener("input", function() {
     }
 });
 
+// Validate optional information input
 var optionalInformationClass = document.getElementsByClassName("optionalInformation");
 for (let i = 0; i < optionalInformationClass.length; i++) {
     optionalInformationClass[i].addEventListener("change", function() {
@@ -265,3 +273,67 @@ for (let i = 0; i < optionalInformationClass.length; i++) {
         }
     });
 }
+
+// -------------------------------------- AUTO POPULATION -----------------------------------------
+// define variables to change fields
+var empNameID = document.getElementById("empNameID");
+var wNumberID = document.getElementById("wNumberID");
+var fundID = document.getElementById("fundID");
+var deptID = document.getElementById("deptID");
+var programID = document.getElementById("programID");
+var acctID = document.getElementById("acctID");
+var projectID = document.getElementById("projectID");
+var startDate = document.getElementById("startDate");
+
+// fill in data when page loads
+document.body.onload = function() {
+    empNameID.value = "John Doe";
+    wNumberID.value = "w0000001";
+    fundID.value = "Fund A";
+    deptID.value = "Dept A";
+    programID.value = "Program A";
+    acctID.value = "Acct A";
+    projectID.value = "Project A";
+    startDate.value = "2024-01-28";
+    
+    extrapolateDate("startDate", "day1", 1);
+    extrapolateDate("startDate", "endDate", 14);
+    for (let i = 0; i < 13; i++) {
+        var dayID = "day" + (i + 1)
+        var nextDayID = "day" + (i + 2)
+    
+        extrapolateDate(dayID, nextDayID, 2)
+    }
+}
+
+
+
+// -------------------------------------- database stuff for auto population -----------------------------------------
+// function fetchDatabaseInfo() {
+//     console.log("Fetching data from the database...");
+//     var xhr = new XMLHttpRequest();
+//     xhr.open("GET", "side-script.php", true);
+    
+//     xhr.onreadystatechange = function () {
+//         console.log("Ready state: " + xhr.readyState + ", Status: " + xhr.status);
+//         if (xhr.readyState == 4) {
+//             if (xhr.status == 200) {
+//                 var data = JSON.parse(xhr.responseText);
+//                 console.log(data); // Handle the data as needed
+//             } else {
+//                 console.error("Error fetching data: " + xhr.status + " " + xhr.statusText);
+//                 window.alert("An error occurred while fetching data. Please try again later.");
+//             }
+//         }
+//     };
+    
+//     xhr.onerror = function () {
+//         console.error("Request failed");
+//         window.alert("An error occurred while fetching data. Please check your network connection and try again.");
+//     };
+    
+//     xhr.send();
+// }
+
+// // Call the function to fetch and populate data
+// fetchDatabaseInfo();

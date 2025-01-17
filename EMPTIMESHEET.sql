@@ -1,24 +1,25 @@
-/*DROP DATABASE TSDB
+/*DROP DATABASE EMPTIMESHEET
 
-ALTER DATABASE TSDB SET SINGLE_USER WITH ROLLBACK IMMEDIATE; 
+ALTER DATABASE EMPTIMESHEET SET SINGLE_USER WITH ROLLBACK IMMEDIATE; 
 GO*/
 
 
-CREATE DATABASE TSDB;
+CREATE DATABASE EMPTIMESHEET;
 
 GO
 
-USE TSDB;
+USE EMPTIMESHEET;
 
 GO
 
-DROP TABLE EMP_DETAIL;
+--DROP TABLE EMP_DETAIL;
 
 -- EMP_USER Table
 CREATE TABLE EMP_USER (
     Emp_W_Id NVARCHAR(25) NOT NULL,
 	Emp_Pswd_hash NVARCHAR (255) NOT NULL,
-	PRIMARY KEY (Emp_W_Id),		 
+	Emp_Portal INT NOT NULL DEFAULT 1,
+	PRIMARY KEY (Emp_W_Id),				 
 );
 					
 -- EMP_DETAIL Table
@@ -38,13 +39,9 @@ ALTER TABLE EMP_DETAIL
 ADD CONSTRAINT Emp_W_Id_FK_EMP_DETAIL FOREIGN KEY (Emp_W_ID_FK) REFERENCES EMP_USER(Emp_W_ID);
 
 
-INSERT INTO EMP_USER (Emp_W_Id, Emp_Pswd_hash) 
+INSERT INTO EMP_USER (Emp_W_Id, Emp_Pswd_hash, Emp_Portal) 
 VALUES 
-    ('W000001', '!@#%$!#^$%&%*^*^#^@'),
-    ('W000002', '@$%$^$#&%&$^&*$&@$%^'),
-    ('W000003', '@#$%!#$!%^$#&^*^&*%^&(*'),
-    ('W000004', '%^&%^*%^(%&(^&%%@#%^'),
-    ('W000005', '#%^&*(&*)(^&)*^@^%$^%$');
+    ('W000001', '!@#%$!#^$%&%*^*^#^@', 1);
 
 -- Insert data into EMP_DETAIL table
 INSERT INTO EMP_DETAIL (Emp_W_Id_FK, Emp_Name, Emp_Program, Emp_Dept, Emp_Fund, Emp_Acct, Emp_Proj)
@@ -54,10 +51,6 @@ VALUES
     ('W000002', 'Charlie Davis', 'ProgramB', 'DeptC', 'FundC', 'AcctC', 'ProjC'),
     ('W000004', 'Diana Garcia', 'ProgramD', 'DeptD', 'FundD', 'AcctD', 'ProjD'),
     ('W000005', 'Evan Martinez', 'ProgramE', 'DeptE', 'FundE', 'AcctE', 'ProjE');
-
--- Inserting new column into EMP_USER table
-ALTER TABLE EMP_USER
-    ADD COLUMN Portal_Type INT (1)	NOT NULL DEFAULT 1;
 
 
 SELECT * FROM EMP_USER;

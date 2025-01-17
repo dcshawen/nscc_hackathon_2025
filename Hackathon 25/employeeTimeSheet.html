@@ -401,6 +401,10 @@
                 updateDashboard(storedRole);
             }
         });
+
+        function goBack() {
+            window.location.href = 'dashboard.html';
+        }
     </script>
 </head>
 <body>
@@ -610,7 +614,7 @@
                 </div>
                 <div class="container2">
                     <button type="submit" disabled class="disabled">Submit</button>
-                    <button type="button" onclick="alert('Go back to dashboard')">Back</button>
+                    <button type="button" onclick="goBack()">Back</button>
                 </div>
             </div>
         </div>

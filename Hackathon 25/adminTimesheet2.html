@@ -446,6 +446,10 @@
             // Check supervisor selection on page load
             checkSupervisorSelection();
         });
+
+        function goBack() {
+            window.location.href = 'adminPending.html';
+        }
     </script>
 </head>
 <body>
@@ -657,7 +661,7 @@
                 <!-- Download as PDF Button -->
                 <div class="container2">
                     <button type="button" onclick="downloadAsPDF()">Download as PDF</button>
-                    <button type="button" onclick="alert('Go back to dashboard')">Back</button>
+                    <button type="button" onclick="goBack()">Back</button>
                 </div>
             </div>
         </div>

@@ -446,6 +446,10 @@
             // Check supervisor selection on page load
             checkSupervisorSelection();
         });
+
+        function goBack() {
+            window.location.href = 'adminPending.html';
+        }
     </script>
 </head>
 <body>
@@ -667,7 +671,7 @@
 
                 <div class="container2">
                     <button type="submit" disabled>Submit</button>
-                    <button type="button" onclick="alert('Go back to dashboard')">Back</button>
+                    <button type="button" onclick="goBack()">Back</button>
                 </div>
             </div>
         </div>

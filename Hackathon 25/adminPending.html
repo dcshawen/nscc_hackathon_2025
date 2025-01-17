@@ -92,12 +92,12 @@
     </style>
     <script>
         function updateDashboard(role) {
-            // Placeholder function for role-based dashboard update
             console.log(`Role switched to: ${role}`);
             fetchTimesheets(role); // Fetch timesheets based on the selected role
         }
 
         function fetchTimesheets(role) {
+            console.log(`Fetching timesheets for role: ${role}`);
             // Placeholder for fetching timesheets from a database
             const timesheets = [
                 {
@@ -122,10 +122,11 @@
             tbody.innerHTML = ''; // Clear existing rows
 
             timesheets.forEach(timesheet => {
-                const row = document.createElement('tr');
+                if (timesheet.pendingState === 'supervisor-review') {
+                    return; // Skip timesheets that are in supervisor review state
+                }
 
-                const isViewButtonEnabled = (role === 'Supervisor' && timesheet.pendingState === 'supervisor-review') ||
-                                            (role === 'Admin' && timesheet.pendingState !== 'supervisor-review');
+                const row = document.createElement('tr');
 
                 row.innerHTML = `
                     <td>${timesheet.wNumber}</td>
@@ -146,8 +147,17 @@
                             <option value="final-review" ${timesheet.pendingState === 'final-review' ? 'selected' : ''}>Final Review</option>
                         </select>
                     </td>
-                    <td><button class="action-button" ${isViewButtonEnabled ? '' : 'disabled'}>View</button></td>
+                    <td><button class="action-button">View</button></td>
                 `;
+
+                const viewButton = row.querySelector('.action-button');
+                viewButton.addEventListener('click', () => {
+                    if (timesheet.pendingState === 'initial-review') {
+                        window.location.href = 'adminTimesheet1.html';
+                    } else if (timesheet.pendingState === 'final-review') {
+                        window.location.href = 'adminTimesheet2.html';
+                    }
+                });
 
                 tbody.appendChild(row);
             });

@@ -1,3 +1,4 @@
+import os
 from flask import Flask, render_template, request, redirect, url_for, flash
 import pyodbc
 from argon2 import PasswordHasher
@@ -5,7 +6,7 @@ from argon2.exceptions import VerifyMismatchError
 
 # Initialize Flask app
 app = Flask(__name__)
-app.secretKey = "yourSecretKey"
+app.secretKey = "ctrlAltDefeat"
 
 # Initialize PasswordHasher
 ph = PasswordHasher()
@@ -16,7 +17,7 @@ def getDbConnection():
         connection = pyodbc.connect(
             r"DRIVER={ODBC Driver 17 for SQL Server};"
             r"SERVER=JG-07\MSSQLSERVER2022;"  # Replace with your server name
-            r"DATABASE=TimeSheet;"            # Replace with your database name
+            r"DATABASE=TSDB;"            # Replace with your database name
             r"Trusted_Connection=yes;"
         )
         return connection
@@ -30,7 +31,7 @@ def insertUser(userName, passwordHash):
         connection = getDbConnection()
         with connection.cursor() as cursor:
             cursor.execute(
-                "INSERT INTO users (username, password_hash) VALUES (?, ?)",
+                "INSERT INTO EMP_USER (Emp_W_Id, Emp_Pswd_hash) VALUES (?, ?)",
                 userName, passwordHash
             )
             connection.commit()
@@ -44,7 +45,7 @@ def fetchUser(userName):
         connection = getDbConnection()
         with connection.cursor() as cursor:
             cursor.execute(
-                "SELECT password_hash, portal_type FROM users WHERE username = ?",
+                "SELECT Emp_W_Id, portal_type FROM EMP_USER WHERE Emp_W_Id = ?",
                 userName
             )
             return cursor.fetchone()
@@ -105,7 +106,7 @@ def login():
 @app.route("/portal/<portalType>")
 def portal(portalType):
     #Displays the appropriate portal page based on user credentials
-    validPortals = ["emp", "sup", "ho"]
+    validPortals = ["portal1", "portal2", "portal3"]
     if portalType in validPortals:
         return render_template(f"{portalType}.html", portal=portalType)
     else:

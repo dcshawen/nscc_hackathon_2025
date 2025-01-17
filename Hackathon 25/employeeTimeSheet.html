@@ -95,6 +95,9 @@
         .hidden {
             display: none;
         }
+        .special-row.hidden {
+            display: none;
+        }
         .timesheet-form {
             background-color: white;
             padding: 20px;
@@ -184,10 +187,13 @@
             resize: none;
         }
         .week-table td input[type="date"] {
-            width: 100px; /* Adjust the width as needed */
+            width: 120px; /* Increased width for date input */
         }
         .timesheet-form .row input[type="date"] {
             width: 150px; /* Increased width for pay period date fields */
+        }
+        .week-table td input[type="number"] {
+            width: 70%; /* Reduced width for hours input */
         }
         .week-table td textarea {
             height: 60px;
@@ -350,15 +356,109 @@
         .pending-action-button:hover {
             background-color: #2f3a7a;
         }
+        .disabled {
+            background-color: #e0e0e0;
+            pointer-events: none;
+        }
     </style>
+    <script>
+        function updateDashboard(role) {
+            document.querySelectorAll('.section').forEach(section => section.classList.add('hidden'));
+
+            if (role === 'Employee' || role === 'Supervisor' || role === 'Admin') {
+                document.querySelector('.employee-section').classList.remove('hidden');
+            }
+            if (role === 'Supervisor') {
+                document.querySelector('.supervisor-section').classList.remove('hidden');
+            }
+            if (role === 'Admin') {
+                document.querySelector('.admin-section').classList.remove('hidden');
+            }
+
+            // Store the role in localStorage
+            localStorage.setItem('userRole', role);
+
+            // Update form elements based on role
+            updateFormElements(role);
+
+            // Hide fund line options
+            document.querySelector('.special-row').classList.add('hidden');
+            // Hide supervisor signature section
+            document.querySelector('.signature-box.supervisor').classList.add('hidden');
+            // Hide Fund, Dept, Program, Acct, Project elements
+            document.querySelectorAll('#fund, #dept, #program, #acct, #project').forEach(element => {
+                element.parentElement.classList.add('hidden');
+            });
+        }
+
+        function updateFormElements(role) {
+            const allInputs = document.querySelectorAll('.timesheet-form input, .timesheet-form textarea, .timesheet-form button');
+            const employeeInputs = document.querySelectorAll('.hours, .timesheet-form textarea, #employee-signature, .container2 button');
+            const supervisorInputs = document.querySelectorAll('#manager-signature, .container2 button');
+            const adminInputs = document.querySelectorAll('.timesheet-form input:not(#manager-signature, #employee-signature), .timesheet-form textarea, .container2 button');
+
+            console.log('Role:', role);
+            console.log('All Inputs:', allInputs);
+            console.log('Employee Inputs:', employeeInputs);
+            console.log('Supervisor Inputs:', supervisorInputs);
+            console.log('Admin Inputs:', adminInputs);
+
+            allInputs.forEach(input => {
+                input.disabled = true;
+                input.classList.add('disabled');
+            });
+
+            if (role === 'Employee') {
+                employeeInputs.forEach(input => {
+                    input.disabled = false;
+                    input.classList.remove('disabled');
+                });
+            } else if (role === 'Supervisor') {
+                supervisorInputs.forEach(input => {
+                    input.disabled = false;
+                    input.classList.remove('disabled');
+                });
+            } else if (role === 'Admin') {
+                adminInputs.forEach(input => {
+                    input.disabled = false;
+                    input.classList.remove('disabled');
+                });
+            }
+        }
+
+        // Retrieve the role from localStorage on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const storedRole = localStorage.getItem('userRole');
+            if (storedRole) {
+                document.getElementById('user-role').value = storedRole;
+                updateDashboard(storedRole);
+            }
+
+            document.querySelectorAll('input[type="date"]').forEach(input => {
+                const span = document.createElement('span');
+                span.textContent = input.value;
+                input.parentNode.insertBefore(span, input);
+                input.classList.add('hidden');
+            });
+            document.getElementById('pay-period-start-text').textContent = document.getElementById('pay-period-start').value;
+            document.getElementById('pay-period-end-text').textContent = document.getElementById('pay-period-end').value;
+        });
+    </script>
 </head>
 <body>
         <div class="header">
             <div class="user-info" id="employee">Welcome, Employee (W0000001)</div>
             <a href="#" class="sign-out" id="sign-out-btn">Sign Out</a>
         </div>
-        <!-- <a href="#" class="sign-out">Sign Out</a> -->
-    </div>
+
+        <div class="dropdown">
+            <label for="user-role">Switch Role:</label>
+            <select id="user-role" onchange="updateDashboard(this.value)">
+                <option value="Employee">Employee</option>
+                <option value="Supervisor">Supervisor</option>
+                <option value="Admin">Admin</option>
+            </select>
+        </div>
 
     <div class="timesheet">
 
@@ -375,30 +475,32 @@
                 </div>
     
     
-                <div class="special-row">
-                    <label for="fund">Fund: </label>
-                    <input type="text" id="fund">
+                <div class="special-row hidden">
+                    <label for="fund" class="hidden">Fund: </label>
+                    <input type="text" id="fund" class="hidden">
             
-                    <label for="dept">Dept: </label>
-                    <input type="text" id="dept">
+                    <label for="dept" class="hidden">Dept: </label>
+                    <input type="text" id="dept" class="hidden">
             
-                    <label for="program">Program: </label>
-                    <input type="text" id="program">
+                    <label for="program" class="hidden">Program: </label>
+                    <input type="text" id="program" class="hidden">
             
-                    <label for="acct">Acct: </label>
-                    <input type="text" id="acct">
+                    <label for="acct" class="hidden">Acct: </label>
+                    <input type="text" id="acct" class="hidden">
             
-                    <label for="project">Project: </label>
-                    <input type="text" id="project">
+                    <label for="project" class="hidden">Project: </label>
+                    <input type="text" id="project" class="hidden">
                 </div>
     
     
                 <div class="row">
                     <label for="pay-period-start">Pay Period Start Date (Sunday):</label>
-                    <input type="date" id="pay-period-start">
+                    <span id="pay-period-start-text"></span>
+                    <input type="date" id="pay-period-start" class="hidden">
     
                     <label for="pay-period-end">Pay Period End Date (Saturday):</label>
-                    <input type="date" id="pay-period-end">
+                    <span id="pay-period-end-text"></span>
+                    <input type="date" id="pay-period-end" class="hidden">
                 </div>
     
                 <!-- Week 1 Table -->
@@ -415,43 +517,43 @@
                         <tbody>
                             <tr>
                                 <td>SUNDAY</td>
-                                <td><input type="date"></td>
+                                <td><span class="date-text"></span><input type="date" class="hidden"></td>
                                 <td><input type="number" class="hours" placeholder="Hours"></td>
                                 <td><textarea placeholder="Optional information..."></textarea></td>
                             </tr>
                             <tr>
                                 <td>MONDAY</td>
-                                <td><input type="date"></td>
+                                <td><span class="date-text"></span><input type="date" class="hidden"></td>
                                 <td><input type="number" class="hours" placeholder="Hours"></td>
                                 <td><textarea placeholder="Optional information..."></textarea></td>
                             </tr>
                             <tr>
                                 <td>TUESDAY</td>
-                                <td><input type="date"></td>
+                                <td><span class="date-text"></span><input type="date" class="hidden"></td>
                                 <td><input type="number" class="hours" placeholder="Hours"></td>
                                 <td><textarea placeholder="Optional information..."></textarea></td>
                             </tr>
                             <tr>
                                 <td>WEDNESDAY</td>
-                                <td><input type="date"></td>
+                                <td><span class="date-text"></span><input type="date" class="hidden"></td>
                                 <td><input type="number" class="hours" placeholder="Hours"></td>
                                 <td><textarea placeholder="Optional information..."></textarea></td>
                             </tr>
                             <tr>
                                 <td>THURSDAY</td>
-                                <td><input type="date"></td>
+                                <td><span class="date-text"></span><input type="date" class="hidden"></td>
                                 <td><input type="number" class="hours" placeholder="Hours"></td>
                                 <td><textarea placeholder="Optional information..."></textarea></td>
                             </tr>
                             <tr>
                                 <td>FRIDAY</td>
-                                <td><input type="date"></td>
+                                <td><span class="date-text"></span><input type="date" class="hidden"></td>
                                 <td><input type="number" class="hours" placeholder="Hours"></td>
                                 <td><textarea placeholder="Optional information..."></textarea></td>
                             </tr>
                             <tr>
                                 <td>SATURDAY</td>
-                                <td><input type="date"></td>
+                                <td><span class="date-text"></span><input type="date" class="hidden"></td>
                                 <td><input type="number" class="hours" placeholder="Hours"></td>
                                 <td><textarea placeholder="Optional information..."></textarea></td>
                             </tr>
@@ -480,43 +582,43 @@
                         <tbody>
                             <tr>
                                 <td>SUNDAY</td>
-                                <td><input type="date"></td>
+                                <td><span class="date-text"></span><input type="date" class="hidden"></td>
                                 <td><input type="number" class="hours" placeholder="Hours"></td>
                                 <td><textarea placeholder="Optional information..."></textarea></td>
                             </tr>
                             <tr>
                                 <td>MONDAY</td>
-                                <td><input type="date"></td>
+                                <td><span class="date-text"></span><input type="date" class="hidden"></td>
                                 <td><input type="number" class="hours" placeholder="Hours"></td>
                                 <td><textarea placeholder="Optional information..."></textarea></td>
                             </tr>
                             <tr>
                                 <td>TUESDAY</td>
-                                <td><input type="date"></td>
+                                <td><span class="date-text"></span><input type="date" class="hidden"></td>
                                 <td><input type="number" class="hours" placeholder="Hours"></td>
                                 <td><textarea placeholder="Optional information..."></textarea></td>
                             </tr>
                             <tr>
                                 <td>WEDNESDAY</td>
-                                <td><input type="date"></td>
+                                <td><span class="date-text"></span><input type="date" class="hidden"></td>
                                 <td><input type="number" class="hours" placeholder="Hours"></td>
                                 <td><textarea placeholder="Optional information..."></textarea></td>
                             </tr>
                             <tr>
                                 <td>THURSDAY</td>
-                                <td><input type="date"></td>
+                                <td><span class="date-text"></span><input type="date" class="hidden"></td>
                                 <td><input type="number" class="hours" placeholder="Hours"></td>
                                 <td><textarea placeholder="Optional information..."></textarea></td>
                             </tr>
                             <tr>
                                 <td>FRIDAY</td>
-                                <td><input type="date"></td>
+                                <td><span class="date-text"></span><input type="date" class="hidden"></td>
                                 <td><input type="number" class="hours" placeholder="Hours"></td>
                                 <td><textarea placeholder="Optional information..."></textarea></td>
                             </tr>
                             <tr>
                                 <td>SATURDAY</td>
-                                <td><input type="date"></td>
+                                <td><span class="date-text"></span><input type="date" class="hidden"></td>
                                 <td><input type="number" class="hours" placeholder="Hours"></td>
                                 <td><textarea placeholder="Optional information..."></textarea></td>
                             </tr>
@@ -539,8 +641,8 @@
     
                 <!-- Signature Section -->
                 <div class="signature-section">
-                    <div class="signature-box">
-                        <label>Budget Manager's Signature:</label>
+                    <div class="signature-box supervisor hidden">
+                        <label>Supervisor's Signature:</label>
                         <canvas id="manager-signature" width="300" height="100"></canvas>
                         <button onclick="clearCanvas('manager-signature')">Clear</button>
                     </div>

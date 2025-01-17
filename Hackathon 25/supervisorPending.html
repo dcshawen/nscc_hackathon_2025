@@ -89,6 +89,27 @@
         .action-button:hover {
             background-color: #2f3a7a;
         }
+
+        .back-button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .back-button {
+            background-color: var(--button-color);
+            color: var(--text-color);
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 0 4px 6px var(--button-shadow);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .back-button:hover {
+            background-color: var(--button-hover);
+            box-shadow: 0 6px 8px var(--button-shadow);
+        }
     </style>
     <script>
         function updateDashboard(role) {
@@ -115,6 +136,14 @@
                     payPeriod: '01/01/2025 - 01/14/2025',
                     supervisor: 'supervisor2',
                     pendingState: 'supervisor-review'
+                },
+                {
+                    wNumber: 'W000003',
+                    employeeName: 'Janathon Smith',
+                    submissionDate: '01/16/2025',
+                    payPeriod: '01/01/2025 - 01/14/2025',
+                    supervisor: 'supervisor2',
+                    pendingState: 'final-review'
                 }
             ];
 
@@ -204,6 +233,10 @@
                 <!-- Timesheets will be dynamically populated here -->
             </tbody>
         </table>
+    </div>
+
+    <div class="back-button-container">
+        <button class="back-button" onclick="window.location.href='dashboard.html'">Back</button>
     </div>
 </body>
 </html>

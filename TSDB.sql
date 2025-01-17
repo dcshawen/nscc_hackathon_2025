@@ -18,7 +18,7 @@ DROP TABLE EMP_DETAIL;
 CREATE TABLE EMP_USER (
     Emp_W_Id NVARCHAR(25) NOT NULL,
 	Emp_Pswd_hash NVARCHAR (255) NOT NULL,
-	PRIMARY KEY (Emp_W_Id),				 
+	PRIMARY KEY (Emp_W_Id),		 
 );
 					
 -- EMP_DETAIL Table
@@ -54,6 +54,10 @@ VALUES
     ('W000002', 'Charlie Davis', 'ProgramB', 'DeptC', 'FundC', 'AcctC', 'ProjC'),
     ('W000004', 'Diana Garcia', 'ProgramD', 'DeptD', 'FundD', 'AcctD', 'ProjD'),
     ('W000005', 'Evan Martinez', 'ProgramE', 'DeptE', 'FundE', 'AcctE', 'ProjE');
+
+-- Inserting new column into EMP_USER table
+ALTER TABLE EMP_USER
+    ADD COLUMN Portal_Type INT (1)	NOT NULL DEFAULT 1;
 
 
 SELECT * FROM EMP_USER;

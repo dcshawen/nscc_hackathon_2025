@@ -95,9 +95,6 @@
         .hidden {
             display: none;
         }
-        .special-row.hidden {
-            display: none;
-        }
         .timesheet-form {
             background-color: white;
             padding: 20px;
@@ -380,50 +377,20 @@
 
             // Update form elements based on role
             updateFormElements(role);
-
-            // Hide fund line options
-            document.querySelector('.special-row').classList.add('hidden');
-            // Hide supervisor signature section
-            document.querySelector('.signature-box.supervisor').classList.add('hidden');
-            // Hide Fund, Dept, Program, Acct, Project elements
-            document.querySelectorAll('#fund, #dept, #program, #acct, #project').forEach(element => {
-                element.parentElement.classList.add('hidden');
-            });
         }
 
         function updateFormElements(role) {
             const allInputs = document.querySelectorAll('.timesheet-form input, .timesheet-form textarea, .timesheet-form button');
-            const employeeInputs = document.querySelectorAll('.hours, .timesheet-form textarea, #employee-signature, .container2 button');
-            const supervisorInputs = document.querySelectorAll('#manager-signature, .container2 button');
-            const adminInputs = document.querySelectorAll('.timesheet-form input:not(#manager-signature, #employee-signature), .timesheet-form textarea, .container2 button');
-
-            console.log('Role:', role);
-            console.log('All Inputs:', allInputs);
-            console.log('Employee Inputs:', employeeInputs);
-            console.log('Supervisor Inputs:', supervisorInputs);
-            console.log('Admin Inputs:', adminInputs);
+            const supervisorSignature = document.querySelector('#manager-signature');
 
             allInputs.forEach(input => {
                 input.disabled = true;
                 input.classList.add('disabled');
             });
 
-            if (role === 'Employee') {
-                employeeInputs.forEach(input => {
-                    input.disabled = false;
-                    input.classList.remove('disabled');
-                });
-            } else if (role === 'Supervisor') {
-                supervisorInputs.forEach(input => {
-                    input.disabled = false;
-                    input.classList.remove('disabled');
-                });
-            } else if (role === 'Admin') {
-                adminInputs.forEach(input => {
-                    input.disabled = false;
-                    input.classList.remove('disabled');
-                });
-            }
+            // Enable supervisor's signature
+            supervisorSignature.disabled = false;
+            supervisorSignature.classList.remove('disabled');
         }
 
         // Retrieve the role from localStorage on page load
@@ -433,15 +400,6 @@
                 document.getElementById('user-role').value = storedRole;
                 updateDashboard(storedRole);
             }
-
-            document.querySelectorAll('input[type="date"]').forEach(input => {
-                const span = document.createElement('span');
-                span.textContent = input.value;
-                input.parentNode.insertBefore(span, input);
-                input.classList.add('hidden');
-            });
-            document.getElementById('pay-period-start-text').textContent = document.getElementById('pay-period-start').value;
-            document.getElementById('pay-period-end-text').textContent = document.getElementById('pay-period-end').value;
         });
     </script>
 </head>
@@ -468,39 +426,37 @@
                 <h2>Create New Timesheet</h2>
                 <div class="row">
                     <label for="employee-name">Employee Name:</label>
-                    <input type="text" id="employee-name" placeholder="Enter employee name">
+                    <input type="text" id="employee-name" placeholder="Enter employee name" disabled class="disabled">
     
                     <label for="employee-w">W#:</label>
-                    <input type="text" id="employee-w" placeholder="Enter W#">
+                    <input type="text" id="employee-w" placeholder="Enter W#" disabled class="disabled">
                 </div>
     
     
-                <div class="special-row hidden">
-                    <label for="fund" class="hidden">Fund: </label>
-                    <input type="text" id="fund" class="hidden">
+                <div class="special-row">
+                    <label for="fund">Fund: </label>
+                    <input type="text" id="fund" disabled class="disabled">
             
-                    <label for="dept" class="hidden">Dept: </label>
-                    <input type="text" id="dept" class="hidden">
+                    <label for="dept">Dept: </label>
+                    <input type="text" id="dept" disabled class="disabled">
             
-                    <label for="program" class="hidden">Program: </label>
-                    <input type="text" id="program" class="hidden">
+                    <label for="program">Program: </label>
+                    <input type="text" id="program" disabled class="disabled">
             
-                    <label for="acct" class="hidden">Acct: </label>
-                    <input type="text" id="acct" class="hidden">
+                    <label for="acct">Acct: </label>
+                    <input type="text" id="acct" disabled class="disabled">
             
-                    <label for="project" class="hidden">Project: </label>
-                    <input type="text" id="project" class="hidden">
+                    <label for="project">Project: </label>
+                    <input type="text" id="project" disabled class="disabled">
                 </div>
     
     
                 <div class="row">
                     <label for="pay-period-start">Pay Period Start Date (Sunday):</label>
-                    <span id="pay-period-start-text"></span>
-                    <input type="date" id="pay-period-start" class="hidden">
+                    <input type="date" id="pay-period-start" disabled class="disabled">
     
                     <label for="pay-period-end">Pay Period End Date (Saturday):</label>
-                    <span id="pay-period-end-text"></span>
-                    <input type="date" id="pay-period-end" class="hidden">
+                    <input type="date" id="pay-period-end" disabled class="disabled">
                 </div>
     
                 <!-- Week 1 Table -->
@@ -517,43 +473,43 @@
                         <tbody>
                             <tr>
                                 <td>SUNDAY</td>
-                                <td><span class="date-text"></span><input type="date" class="hidden"></td>
+                                <td><input type="date" disabled class="disabled"></td>
                                 <td><input type="number" class="hours" placeholder="Hours"></td>
                                 <td><textarea placeholder="Optional information..."></textarea></td>
                             </tr>
                             <tr>
                                 <td>MONDAY</td>
-                                <td><span class="date-text"></span><input type="date" class="hidden"></td>
+                                <td><input type="date" disabled class="disabled"></td>
                                 <td><input type="number" class="hours" placeholder="Hours"></td>
                                 <td><textarea placeholder="Optional information..."></textarea></td>
                             </tr>
                             <tr>
                                 <td>TUESDAY</td>
-                                <td><span class="date-text"></span><input type="date" class="hidden"></td>
+                                <td><input type="date" disabled class="disabled"></td>
                                 <td><input type="number" class="hours" placeholder="Hours"></td>
                                 <td><textarea placeholder="Optional information..."></textarea></td>
                             </tr>
                             <tr>
                                 <td>WEDNESDAY</td>
-                                <td><span class="date-text"></span><input type="date" class="hidden"></td>
+                                <td><input type="date" disabled class="disabled"></td>
                                 <td><input type="number" class="hours" placeholder="Hours"></td>
                                 <td><textarea placeholder="Optional information..."></textarea></td>
                             </tr>
                             <tr>
                                 <td>THURSDAY</td>
-                                <td><span class="date-text"></span><input type="date" class="hidden"></td>
+                                <td><input type="date" disabled class="disabled"></td>
                                 <td><input type="number" class="hours" placeholder="Hours"></td>
                                 <td><textarea placeholder="Optional information..."></textarea></td>
                             </tr>
                             <tr>
                                 <td>FRIDAY</td>
-                                <td><span class="date-text"></span><input type="date" class="hidden"></td>
+                                <td><input type="date" disabled class="disabled"></td>
                                 <td><input type="number" class="hours" placeholder="Hours"></td>
                                 <td><textarea placeholder="Optional information..."></textarea></td>
                             </tr>
                             <tr>
                                 <td>SATURDAY</td>
-                                <td><span class="date-text"></span><input type="date" class="hidden"></td>
+                                <td><input type="date" disabled class="disabled"></td>
                                 <td><input type="number" class="hours" placeholder="Hours"></td>
                                 <td><textarea placeholder="Optional information..."></textarea></td>
                             </tr>
@@ -582,43 +538,43 @@
                         <tbody>
                             <tr>
                                 <td>SUNDAY</td>
-                                <td><span class="date-text"></span><input type="date" class="hidden"></td>
+                                <td><input type="date" disabled class="disabled"></td>
                                 <td><input type="number" class="hours" placeholder="Hours"></td>
                                 <td><textarea placeholder="Optional information..."></textarea></td>
                             </tr>
                             <tr>
                                 <td>MONDAY</td>
-                                <td><span class="date-text"></span><input type="date" class="hidden"></td>
+                                <td><input type="date" disabled class="disabled"></td>
                                 <td><input type="number" class="hours" placeholder="Hours"></td>
                                 <td><textarea placeholder="Optional information..."></textarea></td>
                             </tr>
                             <tr>
                                 <td>TUESDAY</td>
-                                <td><span class="date-text"></span><input type="date" class="hidden"></td>
+                                <td><input type="date" disabled class="disabled"></td>
                                 <td><input type="number" class="hours" placeholder="Hours"></td>
                                 <td><textarea placeholder="Optional information..."></textarea></td>
                             </tr>
                             <tr>
                                 <td>WEDNESDAY</td>
-                                <td><span class="date-text"></span><input type="date" class="hidden"></td>
+                                <td><input type="date" disabled class="disabled"></td>
                                 <td><input type="number" class="hours" placeholder="Hours"></td>
                                 <td><textarea placeholder="Optional information..."></textarea></td>
                             </tr>
                             <tr>
                                 <td>THURSDAY</td>
-                                <td><span class="date-text"></span><input type="date" class="hidden"></td>
+                                <td><input type="date" disabled class="disabled"></td>
                                 <td><input type="number" class="hours" placeholder="Hours"></td>
                                 <td><textarea placeholder="Optional information..."></textarea></td>
                             </tr>
                             <tr>
                                 <td>FRIDAY</td>
-                                <td><span class="date-text"></span><input type="date" class="hidden"></td>
+                                <td><input type="date" disabled class="disabled"></td>
                                 <td><input type="number" class="hours" placeholder="Hours"></td>
                                 <td><textarea placeholder="Optional information..."></textarea></td>
                             </tr>
                             <tr>
                                 <td>SATURDAY</td>
-                                <td><span class="date-text"></span><input type="date" class="hidden"></td>
+                                <td><input type="date" disabled class="disabled"></td>
                                 <td><input type="number" class="hours" placeholder="Hours"></td>
                                 <td><textarea placeholder="Optional information..."></textarea></td>
                             </tr>
@@ -641,10 +597,10 @@
     
                 <!-- Signature Section -->
                 <div class="signature-section">
-                    <div class="signature-box supervisor hidden">
+                    <div class="signature-box">
                         <label>Supervisor's Signature:</label>
-                        <canvas id="manager-signature" width="300" height="100"></canvas>
-                        <button onclick="clearCanvas('manager-signature')">Clear</button>
+                        <canvas id="manager-signature" width="300" height="100" disabled class="disabled"></canvas>
+                        <button onclick="clearCanvas('manager-signature')" disabled class="disabled">Clear</button>
                     </div>
                     <div class="signature-box">
                         <label>Employee's Signature:</label>
@@ -653,7 +609,7 @@
                     </div>
                 </div>
                 <div class="container2">
-                    <button type="submit">Submit</button>
+                    <button type="submit" disabled class="disabled">Submit</button>
                     <button type="button" onclick="alert('Go back to dashboard')">Back</button>
                 </div>
             </div>

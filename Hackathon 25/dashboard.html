@@ -364,7 +364,19 @@
             if (role === 'Admin') {
                 document.querySelector('.admin-section').classList.remove('hidden');
             }
+
+            // Store the role in localStorage
+            localStorage.setItem('userRole', role);
         }
+
+        // Retrieve the role from localStorage on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const storedRole = localStorage.getItem('userRole');
+            if (storedRole) {
+                document.getElementById('user-role').value = storedRole;
+                updateDashboard(storedRole);
+            }
+        });
 
         function toggleTimesheetForm(show) {
             const dashboardContainer = document.getElementById('dashboard-container');
@@ -419,7 +431,7 @@
 
     <div class="section employee-section">
         <h2>Employee Options</h2>
-        <div class="button" onclick="alert('goign to timesheet')">Create New Timesheet</div>
+        <div class="button" onclick="window.location.href='employeeTimesheet.html'">Create New Timesheet</div>
     </div>
 
     <div class="section supervisor-section hidden">

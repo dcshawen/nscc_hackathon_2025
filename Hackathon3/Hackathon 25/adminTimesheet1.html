@@ -98,6 +98,11 @@
         function goBack() {
             window.location.href = 'adminPending.html';
         }
+
+        function enableSubmitButton() {
+            document.querySelector('.container2 button[type="submit"]').disabled = false;
+            document.querySelector('.container2 button[type="submit"]').classList.remove('disabled');
+        }
     </script>
     <style>
         /* ...existing styles... */
@@ -337,6 +342,7 @@
                 <div class="container2">
                     <button type="submit" disabled>Submit</button>
                     <button type="button" onclick="goBack()">Back</button>
+                    <!-- <button id="saveBtn" onClick="enableSubmitButton()">I certify this information is true</button> -->
                 </div>
             </div>
         </div>
@@ -513,6 +519,16 @@
                 replayCanvas.style.display = 'none';
                 replayLabel.style.display = 'none';
             }
+        });
+
+        // Enable submit button when save button is pressed
+        document.getElementById('saveBtn').addEventListener('click', function() {
+            document.querySelector('.container2 button[type="submit"]').disabled = false;
+        });
+
+        // Disable submit button when clear button is pressed
+        document.getElementById('clearBtn').addEventListener('click', function() {
+            document.querySelector('.container2 button[type="submit"]').disabled = true;
         });
     </script>
 </body>

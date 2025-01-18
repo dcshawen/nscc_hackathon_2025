@@ -8,6 +8,36 @@
 --text-color: white;
 --button-shadow: rgba(0, 0, 0, 0.2);
 }
+/* SIGNATURE STUFF */
+
+#employee-signature {
+    border: 1px solid #000;
+    /* display: none; */
+}
+
+#manager-signature {
+    border: 1px solid #000;
+    /* display: none; */
+}
+
+#clearBtn, #saveBtn {
+    /* display: none; */
+}
+
+/* Canvas container */
+.canvas-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+/* Canvas styles */
+canvas {
+    border: 1px solid black;
+    display: block;
+}
 
 body {
     font-family: Arial, sans-serif;

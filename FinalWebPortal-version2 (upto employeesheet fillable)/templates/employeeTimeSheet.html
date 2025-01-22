@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Employee TimeSheet</title>
+    
+    <script>
+        function updateDashboard(role) {
+            document.querySelectorAll('.section').forEach(section => section.classList.add('hidden'));
+
+            if (role === 'Employee' || role === 'Supervisor' || role === 'Admin') {
+                document.querySelector('.employee-section').classList.remove('hidden');
+            }
+            if (role === 'Supervisor') {
+                document.querySelector('.supervisor-section').classList.remove('hidden');
+            }
+            if (role === 'Admin') {
+                document.querySelector('.admin-section').classList.remove('hidden');
+            }
+
+            // Store the role in localStorage
+            localStorage.setItem('userRole', role);
+
+            // Update form elements based on role
+            updateFormElements(role);
+        }
+
+        function updateFormElements(role) {
+            const allInputs = document.querySelectorAll('.timesheet-form input, .timesheet-form textarea, .timesheet-form button');
+            const supervisorSignature = document.querySelector('#manager-signature');
+
+            allInputs.forEach(input => {
+                input.disabled = true;
+                input.classList.add('disabled');
+            });
+
+            // Enable supervisor's signature
+            supervisorSignature.disabled = false;
+            supervisorSignature.classList.remove('disabled');
+        }
+
+        // Retrieve the role from localStorage on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const storedRole = localStorage.getItem('userRole');
+            if (storedRole) {
+                document.getElementById('user-role').value = storedRole;
+                updateDashboard(storedRole);
+            }
+
+            // Enable submit button when save button is pressed
+            document.getElementById('saveBtn').addEventListener('click', function() {
+                document.querySelector('.container2 button[type="submit"]').disabled = false;
+            });
+
+            // Disable submit button when clear button is pressed
+            document.getElementById('clearBtn').addEventListener('click', function() {
+                document.querySelector('.container2 button[type="submit"]').disabled = true;
+            });
+        });
+
+        function goBack() {
+            window.location.href = 'dashboard.html';
+        }
+
+        function enableSubmitButton() {
+            document.querySelector('.container2 button[type="submit"]').disabled = false;
+            document.querySelector('.container2 button[type="submit"]').classList.remove('disabled');
+        }
+    </script>
+    <style>
+        /* ...existing styles... */
+        #hourly-rate {
+            width: 50%;
+        }
+    </style>
+</head>
+<body>
+        <div class="header">
+            <div class="user-info" id="employee">Welcome, Employee (W0000001)</div>
+            <a href="#" class="sign-out" id="sign-out-btn">Sign Out</a>
+        </div>
+
+        <div class="dropdown">
+            <select id="user-role" onchange="updateDashboard(this.value)">
+                <option value="Employee">Employee</option>
+                <option value="Supervisor">Supervisor</option>
+                <option value="Admin">Admin</option>
+            </select>
+        </div>
+
+    <div class="timesheet">
+
+
+        <div id="timesheet-container">
+            <div class="timesheet-form">
+                <h2>NSCC Timesheet for Casual and Auxiliary* Hours</h2>
+                <p>*Collective Agreements: Faculty Article 18, Professional Support Article 18</p>
+                <div class="row">
+                    <label for="employee-name">Employee Name:</label>
+                    <input type="text" id="employee-name" placeholder="Enter employee name">
+    
+                    <label for="employee-w">W#:</label>
+                    <input type="text" id="employee-w" placeholder="Enter W#">
+                </div>
+    
+    
+                <div class="special-row">
+                    <label for="fund">Fund: </label>
+                    <input type="text" id="fund">
+            
+                    <label for="dept">Dept: </label>
+                    <input type="text" id="dept">
+            
+                    <label for="program">Program: </label>
+                    <input type="text" id="program">
+            
+                    <label for="acct">Acct: </label>
+                    <input type="text" id="acct">
+            
+                    <label for="project">Project: </label>
+                    <input type="text" id="project">
+                </div>
+    
+    
+                <div class="row">
+                    <label for="pay-period-start">Pay Period Start Date (Sunday):</label>
+                    <input type="date" id="pay-period-start">
+    
+                    <label for="pay-period-end">Pay Period End Date (Saturday):</label>
+                    <input type="date" id="pay-period-end">
+                </div>
+                <div class="special-row">
+                    <label for="hourly-rate">Hourly Rate: (Complete additional timesheet(s) if employee has more than one rate)</label>
+                    <input type="text" id="hourly-rate">
+                    <label>Indicate whether this assignment is casual or auxiliary:</label>
+                    <div>
+                        <input type="radio" id="casual" name="assignment-type" value="casual">
+                        <label for="casual">Casual</label>
+                        <input type="radio" id="auxiliary" name="assignment-type" value="auxiliary">
+                        <label for="auxiliary">Auxiliary</label>
+                    </div>
+                </div>
+    
+                <!-- Week 1 Table -->
+                <div class="week-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>WEEK 1</th>
+                                <th>DATE</th>
+                                <th>HOURS WORKED</th>
+                                <th>Other information, if required</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>SUNDAY</td>
+                                <td><input type="date" disabled class="disabled"></td>
+                                <td><input type="number" class="hours" placeholder="Hours"></td>
+                                <td><textarea placeholder="Optional information..."></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>MONDAY</td>
+                                <td><input type="date" disabled class="disabled"></td>
+                                <td><input type="number" class="hours" placeholder="Hours"></td>
+                                <td><textarea placeholder="Optional information..."></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>TUESDAY</td>
+                                <td><input type="date" disabled class="disabled"></td>
+                                <td><input type="number" class="hours" placeholder="Hours"></td>
+                                <td><textarea placeholder="Optional information..."></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>WEDNESDAY</td>
+                                <td><input type="date" disabled class="disabled"></td>
+                                <td><input type="number" class="hours" placeholder="Hours"></td>
+                                <td><textarea placeholder="Optional information..."></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>THURSDAY</td>
+                                <td><input type="date" disabled class="disabled"></td>
+                                <td><input type="number" class="hours" placeholder="Hours"></td>
+                                <td><textarea placeholder="Optional information..."></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>FRIDAY</td>
+                                <td><input type="date" disabled class="disabled"></td>
+                                <td><input type="number" class="hours" placeholder="Hours"></td>
+                                <td><textarea placeholder="Optional information..."></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>SATURDAY</td>
+                                <td><input type="date" disabled class="disabled"></td>
+                                <td><input type="number" class="hours" placeholder="Hours"></td>
+                                <td><textarea placeholder="Optional information..."></textarea></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2" class="total-label">WEEK 1 TOTALS</td>
+                                <td><input type="number" id="week1-total" readonly></td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+    
+                <!-- Week 2 Table -->
+                <div class="week-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>WEEK 2</th>
+                                <th>DATE</th>
+                                <th>HOURS WORKED</th>
+                                <th>Other information, if required</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>SUNDAY</td>
+                                <td><input type="date" disabled class="disabled"></td>
+                                <td><input type="number" class="hours" placeholder="Hours"></td>
+                                <td><textarea placeholder="Optional information..."></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>MONDAY</td>
+                                <td><input type="date" disabled class="disabled"></td>
+                                <td><input type="number" class="hours" placeholder="Hours"></td>
+                                <td><textarea placeholder="Optional information..."></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>TUESDAY</td>
+                                <td><input type="date" disabled class="disabled"></td>
+                                <td><input type="number" class="hours" placeholder="Hours"></td>
+                                <td><textarea placeholder="Optional information..."></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>WEDNESDAY</td>
+                                <td><input type="date" disabled class="disabled"></td>
+                                <td><input type="number" class="hours" placeholder="Hours"></td>
+                                <td><textarea placeholder="Optional information..."></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>THURSDAY</td>
+                                <td><input type="date" disabled class="disabled"></td>
+                                <td><input type="number" class="hours" placeholder="Hours"></td>
+                                <td><textarea placeholder="Optional information..."></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>FRIDAY</td>
+                                <td><input type="date" disabled class="disabled"></td>
+                                <td><input type="number" class="hours" placeholder="Hours"></td>
+                                <td><textarea placeholder="Optional information..."></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>SATURDAY</td>
+                                <td><input type="date" disabled class="disabled"></td>
+                                <td><input type="number" class="hours" placeholder="Hours"></td>
+                                <td><textarea placeholder="Optional information..."></textarea></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2" class="total-label">WEEK 2 TOTALS</td>
+                                <td><input type="number" id="week2-total" readonly></td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+    
+                <!-- Notes/Comments Section -->
+                <div class="notes-section">
+                    <label>NOTES/COMMENTS:</label>
+                    <textarea rows="4"></textarea>
+                </div>
+    
+                <!-- Signature Section -->
+                <div class="signature-section">
+                    <div class="signature-box">
+                        <label>Supervisor's Signature:</label>
+                        <canvas id="manager-signature" width="300" height="100" disabled class="disabled"></canvas>
+                        <button onclick="clearCanvas('manager-signature')" disabled class="disabled">Clear</button>
+                    </div>
+                    <div class="signature-box">
+                        <label>Employee's Signature:</label>
+                        <canvas id="signatureCanvas" width="300" height="100"></canvas>
+                        <button id="clearBtn">Clear</button>
+                        <button id="saveBtn" onClick="enableSubmitButton()">I certify this information is true</button>
+                    </div>
+                </div>
+                <div class="container2">
+                    <button type="submit" disabled class="disabled">Submit</button>
+                    <button type="button" onclick="goBack()">Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <script>
+        // Dummy values for user information
+        const userName = "John Doe"; // Replace this with dynamic data
+        const userId = "W000001";   // Replace this with dynamic data
+
+        // Inject user data into the header
+        document.getElementById('employee').textContent = `Welcome, ${userName} (${userId})`;
+
+        // Handle sign-out
+        document.getElementById('sign-out-btn').addEventListener('click', function (event) {
+        event.preventDefault(); // Prevent default link behavior
+        // Placeholder logic for sign-out
+        alert("You have been signed out! Redirecting...");
+        // Redirect to the login page or perform backend sign-out logic
+        // window.location.href = "/login"; // Update this to your login page or logout handler
+        });
+
+        // Code for e-signature
+        // Elements
+        const canvas = document.getElementById('signatureCanvas');
+        const ctx = canvas.getContext('2d');
+        const clearBtn = document.getElementById('clearBtn');
+        const saveBtn = document.getElementById('saveBtn');
+        const checkbox = document.getElementById('certifyCheckbox');
+        const replayCanvas = document.createElement('canvas');
+        replayCanvas.width = canvas.width;
+        replayCanvas.height = canvas.height;
+        replayCanvas.id = 'replayCanvas';
+        const replayCtx = replayCanvas.getContext('2d');
+        const replayLabel = document.createElement('p');
+        replayLabel.textContent = 'Load Signature Pad';
+        replayLabel.id = 'replayLabel';
+        replayLabel.style.display = 'none';
+        replayCanvas.style.display = 'none';
+        document.body.appendChild(replayLabel);
+        document.body.appendChild(replayCanvas);
+
+        let drawing = false;
+        let pixelData = []; // To store pixel data
+
+        // Functions for drawing
+        const startDrawing = (event) => {
+            drawing = true;
+            ctx.beginPath();
+            ctx.moveTo(getX(event), getY(event));
+            pixelData.push({ x: getX(event), y: getY(event), newStroke: true });
+        };
+
+        const draw = (event) => {
+            if (!drawing) return;
+            const x = getX(event);
+            const y = getY(event);  
+
+            ctx.lineTo(x, y);
+            ctx.stroke();
+
+            // Store the pixel data (x, y)
+            pixelData.push({ x, y, newStroke: false });
+        };
+
+        const stopDrawing = () => {
+            drawing = false;
+            ctx.closePath();
+        };
+
+        const getX = (event) => {
+            const rect = canvas.getBoundingClientRect();
+            return (event.clientX || event.touches[0].clientX) - rect.left;
+        };
+
+        const getY = (event) => {
+            const rect = canvas.getBoundingClientRect();
+            return (event.clientY || event.touches[0].clientY) - rect.top;
+        };
+
+        // Event listeners for drawing
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseleave', stopDrawing);
+
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            startDrawing(e);
+        });
+
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            draw(e);
+        });
+
+        canvas.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            stopDrawing(e);
+        });
+
+        // Clear canvas
+        clearBtn.addEventListener('click', () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            pixelData = []; // Clear stored pixel data
+        });
+
+        // Save canvas
+        saveBtn.addEventListener('click', () => {
+            // Convert pixelData to JSON for SQL storage
+            const jsonData = JSON.stringify(pixelData);
+
+            // Display JSON data for demonstration purposes
+            console.log('Pixel Data JSON:', jsonData);
+
+            // Replay signature on the replayCanvas
+            replayCtx.clearRect(0, 0, replayCanvas.width, replayCanvas.height); // Clear previous replay
+            replayCtx.beginPath();
+
+            pixelData.forEach((point) => {
+                if (point.newStroke) {
+                    replayCtx.moveTo(point.x, point.y);
+                } else {
+                    replayCtx.lineTo(point.x, point.y);
+                }
+            });
+
+            replayCtx.stroke();
+        });
+
+        // Checkbox interaction
+        checkbox.addEventListener('change', () => {
+            if (checkbox.checked) {
+                // Simulate checking for saved signature
+                const savedExists = Math.random() > 0.5; // Randomly simulate a saved signature existing
+                if (savedExists) {
+                    // Simulate loading a saved signature
+                    const savedData = JSON.parse('[{"x":50,"y":60,"newStroke":true},{"x":60,"y":70,"newStroke":false},{"x":70,"y":80,"newStroke":false}]'); // Replace with backend-provided JSON
+
+                    // Clear the canvas for a new signature
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                    // Replay the saved data onto the canvas
+                    ctx.beginPath();
+                    savedData.forEach((point) => {
+                        if (point.newStroke) {
+                            ctx.moveTo(point.x, point.y);
+                        } else {
+                            ctx.lineTo(point.x, point.y);
+                        }
+                    });
+                    ctx.stroke();
+
+                    // Store the loaded data in pixelData
+                    pixelData = savedData;
+                } else {
+                    // No saved signature; clear the canvas
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    pixelData = [];
+                }
+
+                // Show the signature pad, replay canvas, and buttons
+                canvas.style.display = 'block';
+                clearBtn.style.display = 'inline';
+                saveBtn.style.display = 'inline';
+                replayCanvas.style.display = 'block';
+                replayLabel.style.display = 'block';
+            } else {
+                // Hide the signature pad, replay canvas, and buttons
+                canvas.style.display = 'none';
+                clearBtn.style.display = 'none';
+                saveBtn.style.display = 'none';
+                replayCanvas.style.display = 'none';
+                replayLabel.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

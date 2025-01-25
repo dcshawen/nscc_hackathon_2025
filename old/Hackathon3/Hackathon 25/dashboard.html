@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylestwo.css">
+    <title>Developer Dashboard</title>
+    
+    
+    <script>
+        function updateDashboard(role) {
+            document.querySelectorAll('.section').forEach(section => section.classList.add('hidden'));
+
+            if (role === 'Employee' || role === 'Supervisor' || role === 'Admin') {
+                document.querySelector('.employee-section').classList.remove('hidden');
+            }
+            if (role === 'Supervisor') {
+                document.querySelector('.supervisor-section').classList.remove('hidden');
+            }
+            if (role === 'Admin') {
+                document.querySelector('.admin-section').classList.remove('hidden');
+            }
+
+            // Store the role in localStorage
+            localStorage.setItem('userRole', role);
+        }
+
+        // Retrieve the role from localStorage on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const storedRole = localStorage.getItem('userRole');
+            if (storedRole) {
+                document.getElementById('user-role').value = storedRole;
+                updateDashboard(storedRole);
+            }
+        });
+
+        function toggleTimesheetForm(show) {
+            const dashboardContainer = document.getElementById('dashboard-container');
+            const timesheetContainer = document.getElementById('timesheet-container');
+            if (show) {
+                dashboardContainer.classList.add('hidden');
+                timesheetContainer.classList.remove('hidden');
+            } else {
+                dashboardContainer.classList.remove('hidden');
+                timesheetContainer.classList.add('hidden');
+            }
+        }
+
+        function togglePendingTimesheets(show) {
+            const dashboardContainer = document.getElementById('dashboard-container');
+            const timesheetContainer = document.getElementById('pending-container');
+            if (show) {
+                dashboardContainer.classList.add('hidden');
+                timesheetContainer.classList.remove('hidden');
+            } else {
+                dashboardContainer.classList.remove('hidden');
+                timesheetContainer.classList.add('hidden');
+            }
+        }
+
+        function validateForm() {
+            const checkbox = document.getElementById('certify-checkbox');
+            const submitButton = document.getElementById('submit-button');
+            submitButton.disabled = !checkbox.checked;
+        }
+    </script>
+</head>
+<body>
+
+<div class="header">
+    <div class="user-info" id="employee">Welcome, Employee (W0000001)</div>
+    <a href="#" class="sign-out" id="sign-out-btn">Sign Out</a>
+</div>
+
+<div class="dropdown">
+    <select id="user-role" onchange="updateDashboard(this.value)">
+        <!-- <option value="Developer">Developer</option> -->
+        <option value="Employee">Employee</option>
+        <option value="Supervisor">Supervisor</option>
+        <option value="Admin">Admin</option>
+    </select>
+</div>
+
+<div id="dashboard-container" class="main">
+    <div class="role">Role: Developer</div>
+
+    <div class="section employee-section">
+        <h2>Employee Options</h2>
+        <div class="button" onclick="window.location.href='employeeTimesheet.html'">Create New Timesheet</div>
+    </div>
+ 
+    <div class="section supervisor-section hidden">
+        <h2>Supervisor Options</h2>
+        <div class="button" onclick="window.location.href='supervisorPending.html'">View Pending Timesheets</div>
+        <!-- <div class="button" onclick="alert('Viewing reviewed timesheets...')">View Reviewed Timesheets</div> -->
+    </div>
+
+    <div class="section admin-section hidden">
+        <h2>Head Office/Admin Options</h2>
+        <div class="button" onclick="alert('Managing employees...')">Manage Employees</div>
+        <div class="button" onclick="window.location.href='adminPending.html'">View Pending Timesheets</div>
+        <div class="button" onclick="alert('Editing missing details...')">View Archived Timesheets</div>
+        <!-- <div class="button" onclick="alert('Downloading timesheets as PDF...')">Download Timesheets</div> -->
+    </div>
+</div>
+<script>
+    // Dummy values for user information
+    const userName = "John Doe"; // Replace this with dynamic data
+    const userId = "W000001";   // Replace this with dynamic data
+
+    // Inject user data into the header
+    document.getElementById('employee').textContent = `Welcome, ${userName} (${userId})`;
+
+    // Handle sign-out
+    document.getElementById('sign-out-btn').addEventListener('click', function (event) {
+    event.preventDefault(); // Prevent default link behavior
+    // Placeholder logic for sign-out
+    alert("You have been signed out! Redirecting...");
+    // Redirect to the login page or perform backend sign-out logic
+    // window.location.href = "/login"; // Update this to your login page or logout handler
+    });
+
+</script>
+
+</body>
+</html>

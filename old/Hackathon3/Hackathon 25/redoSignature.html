@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Template</title>
+    <style>
+        #employee-signature {
+            border: 1px solid #000;
+            /* display: none; */
+        }
+        #clearBtn, #saveBtn {
+            /* display: none; */
+        }
+
+        /* Canvas container */
+        .canvas-container {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            align-items: flex-start;
+            margin-top: 20px;
+        }
+
+        /* Canvas styles */
+        canvas {
+            border: 1px solid black;
+            display: block;
+        }
+
+
+        :root {
+        --primary-color: #3b4a9a;
+        --primary-hover: #2d3a7c;
+        --button-color: #cedc00;
+        --button-hover: #b0c000;
+        --background-color: #f4f4f9;
+        --text-color: white;
+        --button-shadow: rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+        }
+        .header {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header .user-info {
+            font-size: 18px;
+        }
+        .header .sign-out {
+            background-color: var(--text-color);
+            color: var(--primary-color);
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+        .header .sign-out:hover {
+            background-color: #f0f0f0;
+        }
+        .dropdown {
+            position: absolute;
+            top: 60px;
+            right: 20px;
+        }
+        .dropdown select {
+            padding: 8px;
+            font-size: 16px;
+        }
+        .main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .role {
+            margin-bottom: 20px;
+            font-size: 20px;
+            color: var (--primary-color);
+        }
+        .button {
+            background-color: var(--button-color);
+            color: var(--text-color);
+            padding: 20px 40px;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 0 4px 6px var(--button-shadow);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            margin: 10px 0;
+        }
+        .button:hover {
+            background-color: var(--button-hover);
+            box-shadow: 0 6px 8px var (--button-shadow);
+        }
+        .section {
+            margin-bottom: 40px;
+            width: 100%;
+            max-width: 800px;
+        }
+        .section h2 {
+            margin-bottom: 10px;
+            font-size: 24px;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 5px;
+        }
+        .hidden {
+            display: none;
+        }
+        .timesheet-form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            width: 100%;
+        }
+        .timesheet-form label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+        .timesheet-form input, .timesheet-form textarea, .timesheet-form button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .timesheet-form button {
+            background-color: var(--button-color);
+            color: var(--text-color);
+            cursor: pointer;
+        }
+        .timesheet-form button:disabled {
+            background-color: #ddd;
+            cursor: not-allowed;
+        }
+        .timesheet-form .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .timesheet-form .row label {
+            width: auto;
+            margin-right: 10px;
+        }
+        .timesheet-form .row input {
+            width: auto;
+            flex: 1;
+            margin-right: 10px;
+        }
+        .details-table .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .details-table label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .details-table input {
+            width: 18%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .week-table {
+            margin-top: 20px;
+        }
+        .week-table table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        .week-table th, .week-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .week-table th {
+            background-color: #d8e1f3;
+            font-weight: bold;
+            color: #003366;
+        }
+        .week-table td input[type="number"], .week-table td textarea {
+            width: 90%;
+            padding: 5px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: none;
+        }
+        .week-table td input[type="date"] {
+            width: 120px; /* Increased width for date input */
+        }
+        .timesheet-form .row input[type="date"] {
+            width: 150px; /* Increased width for pay period date fields */
+        }
+        .week-table td input[type="number"] {
+            width: 70%; /* Reduced width for hours input */
+        }
+        .week-table td textarea {
+            height: 60px;
+        }
+        .week-table tfoot .total-label {
+            font-weight: bold;
+            text-align: right;
+            background-color: #d8e1f3;
+            color: #003366;
+        }
+        .week-table tfoot input[readonly] {
+            background-color: #f9f9f9;
+            font-weight: bold;
+            text-align: center;
+        }
+        .notes-section {
+            margin-top: 20px;
+            padding: 10px; /* Added padding */
+            padding-right: 90px; /* Added extra padding to the right */
+        }
+        .notes-section label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .notes-section textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .signature-section {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .signature-box {
+            text-align: center;
+        }
+        .signature-box canvas {
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+        .signature-box button {
+            display: block;
+            margin: 10px auto 0 auto;
+            padding: 5px 20px;
+            background-color: #babbb5;
+            color: black;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .signature-box button:hover {
+            background-color: #0056b3;
+        }
+        .container2 {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container2 button {
+            width: 50%;
+            padding: 10px;
+            margin: 1rem;
+            background-color: #cedc00;
+            color: black;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .container2 button:hover {
+            background-color: #0056b3;
+        }
+        .special-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .timesheet {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* height: 100vh; */
+        }
+        #pending-container body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        #pending-container .header {
+            background-color: #3b4a9a;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #pending-container .header .title {
+            font-size: 24px;
+        }
+
+        #pending-container .header .sign-out {
+            background-color: white;
+            color: #3b4a9a;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        #pending-container .header .sign-out:hover {
+            background-color: #f0f0f0;
+        }
+
+        #pending-container .main {
+            padding: 20px;
+        }
+
+        #pending-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        #pending-table, #pending-table th, #pending-table td {
+            border: 1px solid #ccc;
+        }
+
+        #pending-table th, #pending-table td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        #pending-table th {
+            background-color: #3b4a9a;
+            color: white;
+        }
+
+        #pending-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .pending-action-button {
+            background-color: #3b4a9a;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .pending-action-button:hover {
+            background-color: #2f3a7a;
+        }
+        .disabled {
+            background-color: #e0e0e0;
+            pointer-events: none;
+        }
+    </style>
+    <script>
+        function updateDashboard(role) {
+            document.querySelectorAll('.section').forEach(section => section.classList.add('hidden'));
+
+            if (role === 'Employee' || role === 'Supervisor' || role === 'Admin') {
+                document.querySelector('.employee-section').classList.remove('hidden');
+            }
+            if (role === 'Supervisor') {
+                document.querySelector('.supervisor-section').classList.remove('hidden');
+            }
+            if (role === 'Admin') {
+                document.querySelector('.admin-section').classList.remove('hidden');
+            }
+
+            // Store the role in localStorage
+            localStorage.setItem('userRole', role);
+
+            // Update form elements based on role
+            updateFormElements(role);
+        }
+
+        function updateFormElements(role) {
+            const allInputs = document.querySelectorAll('.timesheet-form input, .timesheet-form textarea, .timesheet-form button');
+            const supervisorSignature = document.querySelector('#manager-signature');
+
+            allInputs.forEach(input => {
+                input.disabled = true;
+                input.classList.add('disabled');
+            });
+
+            // Enable supervisor's signature
+            supervisorSignature.disabled = false;
+            supervisorSignature.classList.remove('disabled');
+        }
+
+        // Retrieve the role from localStorage on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const storedRole = localStorage.getItem('userRole');
+            if (storedRole) {
+                document.getElementById('user-role').value = storedRole;
+                updateDashboard(storedRole);
+            }
+        });
+
+        function goBack() {
+            window.location.href = 'supervisorPending.html';
+        }
+
+        // Signature drawing functionality
+        function initSignaturePad(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            let drawing = false;
+
+            canvas.addEventListener('mousedown', () => {
+                drawing = true;
+                ctx.beginPath();
+            });
+
+            canvas.addEventListener('mouseup', () => {
+                drawing = false;
+            });
+
+            canvas.addEventListener('mousemove', (event) => {
+                if (!drawing) return;
+                ctx.lineWidth = 2;
+                ctx.lineCap = 'round';
+                ctx.strokeStyle = '#000000';
+                ctx.lineTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop);
+                ctx.stroke();
+            });
+
+            canvas.addEventListener('mouseleave', () => {
+                drawing = false;
+            });
+        }
+
+        function clearCanvas(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // Disable submit button when canvas is cleared
+            document.getElementById('submitBtn').disabled = true;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initSignaturePad('manager-signature');
+            initSignaturePad('employee-signature');
+        });
+
+        // Enable submit button when save button is pressed
+        document.getElementById('saveBtn').addEventListener('click', function() {
+            document.getElementById('submitBtn').disabled = false;
+        });
+
+        // Disable submit button when clear button is pressed
+        document.getElementById('clearBtn').addEventListener('click', function() {
+            document.getElementById('submitBtn').disabled = true;
+        });
+    </script>
+</head>
+<body>
+        <div class="header">
+            <div class="user-info" id="employee">Welcome, Employee (W0000001)</div>
+            <a href="#" class="sign-out" id="sign-out-btn">Sign Out</a>
+        </div>
+
+        <div class="dropdown">
+            <label for="user-role">Switch Role:</label>
+            <select id="user-role" onchange="updateDashboard(this.value)">
+                <option value="Employee">Employee</option>
+                <option value="Supervisor">Supervisor</option>
+                <option value="Admin">Admin</option>
+            </select>
+        </div>
+
+    <div class="timesheet">
+
+
+        <div id="timesheet-container">
+            <div class="timesheet-form">
+                <h2>Create New Timesheet</h2>
+                <div class="row">
+                    <label for="employee-name">Employee Name:</label>
+                    <input type="text" id="employee-name" placeholder="Enter employee name" disabled class="disabled">
+    
+                    <label for="employee-w">W#:</label>
+                    <input type="text" id="employee-w" placeholder="Enter W#" disabled class="disabled">
+                </div>
+    
+    
+                <div class="special-row">
+                    <label for="fund">Fund: </label>
+                    <input type="text" id="fund" disabled class="disabled">
+            
+                    <label for="dept">Dept: </label>
+                    <input type="text" id="dept" disabled class="disabled">
+            
+                    <label for="program">Program: </label>
+                    <input type="text" id="program" disabled class="disabled">
+            
+                    <label for="acct">Acct: </label>
+                    <input type="text" id="acct" disabled class="disabled">
+            
+                    <label for="project">Project: </label>
+                    <input type="text" id="project" disabled class="disabled">
+                </div>
+    
+    
+                <div class="row">
+                    <label for="pay-period-start">Pay Period Start Date (Sunday):</label>
+                    <input type="date" id="pay-period-start" disabled class="disabled">
+
+                    <label for="pay-period-end">Pay Period End Date (Saturday):</label>
+                    <input type="date" id="pay-period-end" disabled class="disabled">
+                </div>
+
+                <div class="row">
+                    <label for="hourly-rate">Hourly Rate: (Complete additional timesheet(s) if employee has more than one rate)</label>
+                    <input type="text" id="hourly-rate" disabled class="disabled">
+
+                    <label>Indicate whether this assignment is casual or auxiliary:</label>
+                    <div>
+                        <input type="radio" id="casual" name="assignment-type" value="casual" disabled class="disabled">
+                        <label for="casual">Casual</label>
+                        <input type="radio" id="auxiliary" name="assignment-type" value="auxiliary" disabled class="disabled">
+                        <label for="auxiliary">Auxiliary</label>
+                    </div>
+                </div>
+
+                <!-- Week 1 Table -->
+                <div class="week-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>WEEK 1</th>
+                                <th>DATE</th>
+                                <th>HOURS WORKED</th>
+                                <th>Other information, if required</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>SUNDAY</td>
+                                <td><input type="date" disabled class="disabled"></td>
+                                <td><input type="number" class="hours" placeholder="Hours"></td>
+                                <td><textarea placeholder="Optional information..."></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>MONDAY</td>
+                                <td><input type="date" disabled class="disabled"></td>
+                                <td><input type="number" class="hours" placeholder="Hours"></td>
+                                <td><textarea placeholder="Optional information..."></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>TUESDAY</td>
+                                <td><input type="date" disabled class="disabled"></td>
+                                <td><input type="number" class="hours" placeholder="Hours"></td>
+                                <td><textarea placeholder="Optional information..."></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>WEDNESDAY</td>
+                                <td><input type="date" disabled class="disabled"></td>
+                                <td><input type="number" class="hours" placeholder="Hours"></td>
+                                <td><textarea placeholder="Optional information..."></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>THURSDAY</td>
+                                <td><input type="date" disabled class="disabled"></td>
+                                <td><input type="number" class="hours" placeholder="Hours"></td>
+                                <td><textarea placeholder="Optional information..."></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>FRIDAY</td>
+                                <td><input type="date" disabled class="disabled"></td>
+                                <td><input type="number" class="hours" placeholder="Hours"></td>
+                                <td><textarea placeholder="Optional information..."></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>SATURDAY</td>
+                                <td><input type="date" disabled class="disabled"></td>
+                                <td><input type="number" class="hours" placeholder="Hours"></td>
+                                <td><textarea placeholder="Optional information..."></textarea></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2" class="total-label">WEEK 1 TOTALS</td>
+                                <td><input type="number" id="week1-total" readonly></td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+    
+                <!-- Week 2 Table -->
+                <div class="week-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>WEEK 2</th>
+                                <th>DATE</th>
+                                <th>HOURS WORKED</th>
+                                <th>Other information, if required</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>SUNDAY</td>
+                                <td><input type="date" disabled class="disabled"></td>
+                                <td><input type="number" class="hours" placeholder="Hours"></td>
+                                <td><textarea placeholder="Optional information..."></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>MONDAY</td>
+                                <td><input type="date" disabled class="disabled"></td>
+                                <td><input type="number" class="hours" placeholder="Hours"></td>
+                                <td><textarea placeholder="Optional information..."></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>TUESDAY</td>
+                                <td><input type="date" disabled class="disabled"></td>
+                                <td><input type="number" class="hours" placeholder="Hours"></td>
+                                <td><textarea placeholder="Optional information..."></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>WEDNESDAY</td>
+                                <td><input type="date" disabled class="disabled"></td>
+                                <td><input type="number" class="hours" placeholder="Hours"></td>
+                                <td><textarea placeholder="Optional information..."></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>THURSDAY</td>
+                                <td><input type="date" disabled class="disabled"></td>
+                                <td><input type="number" class="hours" placeholder="Hours"></td>
+                                <td><textarea placeholder="Optional information..."></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>FRIDAY</td>
+                                <td><input type="date" disabled class="disabled"></td>
+                                <td><input type="number" class="hours" placeholder="Hours"></td>
+                                <td><textarea placeholder="Optional information..."></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>SATURDAY</td>
+                                <td><input type="date" disabled class="disabled"></td>
+                                <td><input type="number" class="hours" placeholder="Hours"></td>
+                                <td><textarea placeholder="Optional information..."></textarea></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2" class="total-label">WEEK 2 TOTALS</td>
+                                <td><input type="number" id="week2-total" readonly></td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+    
+                <!-- Notes/Comments Section -->
+                <div class="notes-section">
+                    <label>NOTES/COMMENTS:</label>
+                    <textarea rows="4"></textarea>
+                </div>
+    
+                <!-- Signature Section -->
+                <div class="signature-section">
+                    <div class="signature-box">
+                        <label>Supervisor's Signature:</label>
+                        <canvas id="manager-signature" width="300" height="100" disabled class="disabled"></canvas>
+                        <button onclick="clearCanvas('manager-signature')" disabled class="disabled">Clear</button>
+                    </div>
+                    <div class="signature-box">
+                        <label>Employee's Signature:</label>
+                        <!-- <div>
+                            <input type="checkbox" id="certifyCheckbox">
+                            <label for="certifyCheckbox">I certify that the information I have presented is true.</label>
+                        </div> -->
+                        <canvas id="signatureCanvas" width="300" height="100"></canvas>
+                        <button id="clearBtn">Clear</button>
+                        <button id="saveBtn">I certify this information is true</button>
+                    </div>
+                </div>
+                <div class="container2">
+                    <button type="submit" id="submitBtn" disabled class="disabled">Submit</button>
+                    <button type="button" onclick="goBack()">Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <script>
+        // Dummy values for user information
+        const userName = "John Doe"; // Replace this with dynamic data
+        const userId = "W000001";   // Replace this with dynamic data
+
+        // Inject user data into the header
+        document.getElementById('employee').textContent = `Welcome, ${userName} (${userId})`;
+
+        // Handle sign-out
+        document.getElementById('sign-out-btn').addEventListener('click', function (event) {
+        event.preventDefault(); // Prevent default link behavior
+        // Placeholder logic for sign-out
+        alert("You have been signed out! Redirecting...");
+        // Redirect to the login page or perform backend sign-out logic
+        // window.location.href = "/login"; // Update this to your login page or logout handler
+        });
+
+        // Signature drawing functionality
+        function initSignaturePad(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            let drawing = false;
+
+            canvas.addEventListener('mousedown', () => {
+                drawing = true;
+                ctx.beginPath();
+            });
+
+            canvas.addEventListener('mouseup', () => {
+                drawing = false;
+            });
+
+            canvas.addEventListener('mousemove', (event) => {
+                if (!drawing) return;
+                ctx.lineWidth = 2;
+                ctx.lineCap = 'round';
+                ctx.strokeStyle = '#000000';
+                ctx.lineTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop);
+                ctx.stroke();
+            });
+
+            canvas.addEventListener('mouseleave', () => {
+                drawing = false;
+            });
+        }
+
+        function clearCanvas(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // Disable submit button when canvas is cleared
+            document.getElementById('submitBtn').disabled = true;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initSignaturePad('manager-signature');
+            initSignaturePad('employee-signature');
+        });
+
+        // Enable submit button when save button is pressed
+        document.getElementById('saveBtn').addEventListener('click', function() {
+            document.getElementById('submitBtn').disabled = false;
+        });
+
+        // Disable submit button when clear button is pressed
+        document.getElementById('clearBtn').addEventListener('click', function() {
+            document.getElementById('submitBtn').disabled = true;
+        });
+
+        // Code for e-signature
+        // Elements
+        const canvas = document.getElementById('signatureCanvas');
+        const ctx = canvas.getContext('2d');
+        const clearBtn = document.getElementById('clearBtn');
+        const saveBtn = document.getElementById('saveBtn');
+        const checkbox = document.getElementById('certifyCheckbox');
+        const replayCanvas = document.createElement('canvas');
+        replayCanvas.width = canvas.width;
+        replayCanvas.height = canvas.height;
+        replayCanvas.id = 'replayCanvas';
+        const replayCtx = replayCanvas.getContext('2d');
+        const replayLabel = document.createElement('p');
+        replayLabel.textContent = 'Load Signature Pad';
+        replayLabel.id = 'replayLabel';
+        replayLabel.style.display = 'none';
+        replayCanvas.style.display = 'none';
+        document.body.appendChild(replayLabel);
+        document.body.appendChild(replayCanvas);
+
+        let drawing = false;
+        let pixelData = []; // To store pixel data
+
+        // Functions for drawing
+        const startDrawing = (event) => {
+            drawing = true;
+            ctx.beginPath();
+            ctx.moveTo(getX(event), getY(event));
+            pixelData.push({ x: getX(event), y: getY(event), newStroke: true });
+        };
+
+        const draw = (event) => {
+            if (!drawing) return;
+            const x = getX(event);
+            const y = getY(event);
+
+            ctx.lineTo(x, y);
+            ctx.stroke();
+
+            // Store the pixel data (x, y)
+            pixelData.push({ x, y, newStroke: false });
+        };
+
+        const stopDrawing = () => {
+            drawing = false;
+            ctx.closePath();
+        };
+
+        const getX = (event) => {
+            const rect = canvas.getBoundingClientRect();
+            return (event.clientX || event.touches[0].clientX) - rect.left;
+        };
+
+        const getY = (event) => {
+            const rect = canvas.getBoundingClientRect();
+            return (event.clientY || event.touches[0].clientY) - rect.top;
+        };
+
+        // Event listeners for drawing
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseleave', stopDrawing);
+
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            startDrawing(e);
+        });
+
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            draw(e);
+        });
+
+        canvas.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            stopDrawing(e);
+        });
+
+        // Clear canvas
+        clearBtn.addEventListener('click', () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            pixelData = []; // Clear stored pixel data
+        });
+
+        // Save canvas
+        saveBtn.addEventListener('click', () => {
+            // Convert pixelData to JSON for SQL storage
+            const jsonData = JSON.stringify(pixelData);
+
+            // Display JSON data for demonstration purposes
+            console.log('Pixel Data JSON:', jsonData);
+
+            // Replay signature on the replayCanvas
+            replayCtx.clearRect(0, 0, replayCanvas.width, replayCanvas.height); // Clear previous replay
+            replayCtx.beginPath();
+
+            pixelData.forEach((point) => {
+                if (point.newStroke) {
+                    replayCtx.moveTo(point.x, point.y);
+                } else {
+                    replayCtx.lineTo(point.x, point.y);
+                }
+            });
+
+            replayCtx.stroke();
+        });
+
+        // Checkbox interaction
+        checkbox.addEventListener('change', () => {
+            if (checkbox.checked) {
+                // Simulate checking for saved signature
+                const savedExists = Math.random() > 0.5; // Randomly simulate a saved signature existing
+                if (savedExists) {
+                    // Simulate loading a saved signature
+                    const savedData = JSON.parse('[{"x":50,"y":60,"newStroke":true},{"x":60,"y":70,"newStroke":false},{"x":70,"y":80,"newStroke":false}]'); // Replace with backend-provided JSON
+
+                    // Clear the canvas for a new signature
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                    // Replay the saved data onto the canvas
+                    ctx.beginPath();
+                    savedData.forEach((point) => {
+                        if (point.newStroke) {
+                            ctx.moveTo(point.x, point.y);
+                        } else {
+                            ctx.lineTo(point.x, point.y);
+                        }
+                    });
+                    ctx.stroke();
+
+                    // Store the loaded data in pixelData
+                    pixelData = savedData;
+                } else {
+                    // No saved signature; clear the canvas
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    pixelData = [];
+                }
+
+                // Show the signature pad, replay canvas, and buttons
+                canvas.style.display = 'block';
+                clearBtn.style.display = 'inline';
+                saveBtn.style.display = 'inline';
+                replayCanvas.style.display = 'block';
+                replayLabel.style.display = 'block';
+            } else {
+                // Hide the signature pad, replay canvas, and buttons
+                canvas.style.display = 'none';
+                clearBtn.style.display = 'none';
+                saveBtn.style.display = 'none';
+                replayCanvas.style.display = 'none';
+                replayLabel.style.display = 'none';
+            }
+        });
+
+    </script>
+</body>
+</html>

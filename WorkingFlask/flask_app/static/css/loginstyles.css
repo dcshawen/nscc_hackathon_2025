@@ -1,0 +1,83 @@
+/*for the login page*/
+
+    /* Reset some default styles */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+body {
+        background-color: #003366;
+    }
+    
+    .main {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start; /* Align items to the top */
+        /* height: 100vh; */
+        margin: 0;
+        background-color: #f0f0f0;
+        flex-direction: column;
+    }
+    
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    
+    h1 {
+        margin-top: 5px; /* Adjust this value to move the h1 lower */
+        text-align: center;
+        color: #f0f0f0;
+    }
+    
+    .image
+    {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 300px;
+        /*margin-top: 20px;*/ /* Add some margin to create space between h1 and container */
+    }
+    
+    .container h2 {
+        margin: 0 0 20px;
+        text-align: center;
+    }
+    
+    .container label {
+        display: block;
+        margin: 10px 0 5px;
+    }
+    
+    .container input {
+        width: calc(100% - 20px); /* Account for padding */
+        padding: 10px;
+        margin: 5px 0 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    
+    .container button {
+        width: 100%;
+        padding: 10px;
+        background-color: #cedc00;
+        color: black;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    
+    .container button:hover {
+        background-color: #0056b3;
+    }
+    

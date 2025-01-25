@@ -1,0 +1,87 @@
+-) Touch screen signatures requested
+-) Supervisors sohuld only see their own team
+	- Need team support in database
+-) Track status for timesheet completions for supevisors
+
+WISHLIST
+	-) Schedule an email blast for timesheet due dates
+	-) Automatically pull supervirosr from database
+
+-) Automatic reminders to casual employees
+-) All sheets on one page
+-) Archive all timesheets through the fiscal year and wipe on March 31st
+-) Focus on timesaving ( Archive all timesheets through the fiscal year and wipe on March 31st
+-) Think about MVP2, MVP3
+	-) Include potential changes for payroll in presentation if we can improve their process too
+	-) Include in presentation the ability for employees to fill out only one sheet. Do not implement in current product.
+	-) Include advice for Al on the front end
+
+-) No punch clock
+-) Filled out biweekly
+-) Add timestamps
+-) Should be signed every time
+-) Composite key for timesheets should be w# and project instead of w# and hourly rate
+-) Supervisors and employees do not neccessarily know their project number
+-) Supervisors should only be able to see timesheets for their own employees
+
+-) Supervisors should be able to look at previous timesheets requested (High priority gold plating)
+-) Document the development using AI for the presentation
+-) ***Saw Geoff motion positively towards our group while talking to other mentor
+
+PAYROLL DEPT
+-) Casual employees on different pay schedule than full time
+-) Auto populate pay dates required
+-) 120 projects
+-) Project not needed on pdf?
+-) Money comes from different accounts per supervisor
+
+-) Pull supervisor data from outloook
+	-Supervisors could be assigned at an employees hiredate
+-) Project number not needed
+Casual fills out and sends to superviro
+We don't need to deal with Project
+Casual -> Applied Research Office -> Supervisor -> Applied Research -> Payroll
+
+CCURENT PROCCESS
+-) Send out call for timesheet from HR in payroll
+-) Casuals send timesheets back
+-) Payroll sends to supervisor for verification
+-) Supervisor sends back
+
+Info about judging coming soonk
+
+NAMES
+Glen MacLeod
+	-NS POWER Director Customer and Grid Intelligence
+Ashif Yousef
+	-NS POWER  Solutions Develpoment
+Alan Joseph
+Dan Penny
+
+
+[]
+EMAIL BLAST
+
+AUTO POPULATION
+Track who has sent in their timesheets
+Mobile site (simple, media rules)
+
+[PAGES] Alex and Zach
+	-Supervisor Portal
+		- View hours and dates and apply signature
+		- With Timestamp
+	-HO Portal
+		- Receive employee timesheet with blank spaces for project number/supervisor
+		- HO Fills out project, funding, department, account
+		- Send to supervisor portal
+
+[EMAIL BLAST] Jax
+	- Email reminder
+	- Currently having some complications
+	- Try to implement, potentially leave for Roadmap for the future
+
+[AUTO POPULATION] Joe
+
+[TRACK WHO HAS SENT TIMESHEETS] Jax
+
+[PRESENTATION] Jenille

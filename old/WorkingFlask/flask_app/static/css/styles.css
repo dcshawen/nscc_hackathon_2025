@@ -1,0 +1,374 @@
+/*Timesheets*/
+:root {
+--primary-color: #003366;
+--primary-hover: #2d3a7c;
+--button-color: #cedc00;
+--button-hover: #b0c000;
+--background-color: #f4f4f9;
+--text-color: white;
+--button-shadow: rgba(0, 0, 0, 0.2);
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #003366;
+}
+
+h2 {
+    font-size: 20px;
+    margin: 0;
+    color:#003366;
+    text-align: center;
+}
+
+p {
+    color:#003366;
+    text-align: center;
+}
+.header {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header .user-info {
+    font-size: 18px;
+}
+.header .sign-out {
+    background-color: var(--text-color);
+    color: var(--primary-color);
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+}
+.header .sign-out:hover {
+    background-color: #f0f0f0;
+}
+.dropdown {
+    position: absolute;
+    top: 60px;
+    right: 20px;
+}
+.dropdown select {
+    padding: 8px;
+    font-size: 16px;
+}
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+.role {
+    margin-bottom: 20px;
+    font-size: 20px;
+    color: var(--primary-color);
+}
+.button {
+    background-color: var(--button-color);
+    color: var(--text-color);
+    padding: 20px 40px;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 0 4px 6px var(--button-shadow);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    margin: 10px 0;
+}
+.button:hover {
+    background-color: var(--button-hover);
+    box-shadow: 0 6px 8px var (--button-shadow);
+}
+.disabled {
+    background-color: grey; 
+    color: white;           
+    cursor: not-allowed;   
+    box-shadow: none;       
+    opacity: 0.4;          
+}
+
+.section {
+    margin-bottom: 40px;
+    width: 100%;
+    max-width: 800px;
+}
+.section h2 {
+    margin-bottom: 10px;
+    font-size: 24px;
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 5px;
+}
+.hidden {
+    display: none;
+}
+.timesheet-form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 800px;
+    width: 100%;
+}
+.timesheet-form label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+.timesheet-form input, .timesheet-form textarea, .timesheet-form button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+.timesheet-form button {
+    background-color: var(--button-color);
+    color: var(--text-color);
+    cursor: pointer;
+}
+.clear {
+    background-color: #ddd;
+    cursor: not-allowed;
+}
+.timesheet-form .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.timesheet-form .row label {
+    width: auto;
+    margin-right: 10px;
+}
+.timesheet-form .row input {
+    width: auto;
+    flex: 1;
+    margin-right: 10px;
+}
+.details-table .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.details-table label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+.details-table input {
+    width: 18%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.week-table {
+    margin-top: 20px;
+}
+.week-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+.week-table th, .week-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+}
+.week-table th {
+    background-color: #d8e1f3;
+    font-weight: bold;
+    color: #003366;
+}
+.week-table td input[type="number"], .week-table td textarea {
+    width: 90%;
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: none;
+}
+.week-table td input[type="date"] {
+    width: 120px; /* Increased width for date input */
+}
+.timesheet-form .row input[type="date"] {
+    width: 150px; /* Increased width for pay period date fields */
+}
+.week-table td input[type="number"] {
+    width: 70%; /* Reduced width for hours input */
+}
+.week-table td textarea {
+    height: 60px;
+}
+.week-table tfoot .total-label {
+    font-weight: bold;
+    text-align: right;
+    background-color: #d8e1f3;
+    color: #003366;
+}
+.week-table tfoot input[readonly] {
+    background-color: #f9f9f9;
+    font-weight: bold;
+    text-align: center;
+}
+.notes-section {
+    margin-top: 20px;
+    padding: 10px; /* Added padding */
+    padding-right: 90px; /* Added extra padding to the right */
+}
+.notes-section label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+.notes-section textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.signature-section {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.signature-box {
+    text-align: center;
+}
+.signature-box canvas {
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+.signature-box button {
+    display: block;
+    margin: 10px auto 0 auto;
+    padding: 5px 20px;
+    background-color: #babbb5;
+    color: black;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.signature-box button:hover {
+    background-color: #0056b3;
+}
+.container2 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container2 button {
+    width: 50%;
+    padding: 10px;
+    margin: 1rem;
+    background-color: #cedc00;
+    color: black;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.container2 button:hover {
+    background-color: #0056b3;
+}
+
+.special-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.timesheet {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* height: 100vh; */
+}
+#pending-container body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+}
+
+#pending-container .header {
+    background-color: #3b4a9a;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#pending-container .header .title {
+    font-size: 24px;
+}
+
+#pending-container .header .sign-out {
+    background-color: white;
+    color: #3b4a9a;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+#pending-container .header .sign-out:hover {
+    background-color: #f0f0f0;
+}
+
+#pending-container .main {
+    padding: 20px;
+}
+
+#pending-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#pending-table, #pending-table th, #pending-table td {
+    border: 1px solid #ccc;
+}
+
+#pending-table th, #pending-table td {
+    padding: 10px;
+    text-align: left;
+}
+
+#pending-table th {
+    background-color: #3b4a9a;
+    color: white;
+}
+
+#pending-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.pending-action-button {
+    background-color: #3b4a9a;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.pending-action-button:hover {
+    background-color: #2f3a7a;
+}
+.disabled {
+    background-color: #e0e0e0;
+    pointer-events: none;
+}
